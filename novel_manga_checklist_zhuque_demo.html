@@ -68,14 +68,14 @@
     }
 
     .page {
-      width: min(1440px, calc(100vw - 28px));
-      margin: 18px auto 40px;
+      width: min(1480px, calc(100vw - 18px));
+      margin: 10px auto 24px;
     }
 
     .hero {
       position: relative;
       overflow: hidden;
-      padding: 28px;
+      padding: 20px;
       border: 1px solid rgba(189, 164, 127, 0.55);
       border-radius: var(--radius-xl);
       background:
@@ -98,9 +98,9 @@
     .hero-top {
       display: flex;
       justify-content: space-between;
-      gap: 24px;
+      gap: 16px;
       align-items: flex-start;
-      margin-bottom: 22px;
+      margin-bottom: 16px;
     }
 
     .hero-copy h1 {
@@ -112,9 +112,9 @@
     }
 
     .hero-copy p {
-      margin: 10px 0 0;
+      margin: 8px 0 0;
       max-width: 760px;
-      line-height: 1.7;
+      line-height: 1.6;
       color: var(--muted);
     }
 
@@ -122,12 +122,12 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: flex-end;
-      gap: 10px;
+      gap: 8px;
       min-width: 320px;
     }
 
     .btn {
-      padding: 11px 16px;
+      padding: 9px 14px;
       background: #fff8ef;
       color: var(--accent-deep);
       border: 1px solid rgba(139, 94, 52, 0.16);
@@ -148,7 +148,7 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 10px 14px;
+      padding: 8px 12px;
       border-radius: 999px;
       background: rgba(255, 253, 249, 0.88);
       border: 1px solid rgba(189, 164, 127, 0.5);
@@ -177,12 +177,12 @@
     .overview {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 14px;
-      margin-bottom: 18px;
+      gap: 10px;
+      margin-bottom: 14px;
     }
 
     .metric {
-      padding: 16px 18px;
+      padding: 12px 14px;
       border-radius: var(--radius-lg);
       background: rgba(255, 250, 243, 0.82);
       border: 1px solid rgba(189, 164, 127, 0.38);
@@ -190,28 +190,32 @@
 
     .metric-label {
       display: block;
-      margin-bottom: 6px;
-      font-size: 0.9rem;
+      margin-bottom: 4px;
+      font-size: 0.84rem;
       color: var(--muted);
     }
 
     .metric-value {
-      font-size: clamp(1.05rem, 2vw, 1.55rem);
+      font-size: clamp(0.96rem, 1.8vw, 1.3rem);
       font-weight: 700;
       color: var(--accent-deep);
     }
 
     .tabs {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       overflow-x: auto;
-      padding-bottom: 6px;
-      margin-bottom: 22px;
+      padding-bottom: 4px;
+      margin-bottom: 14px;
+      position: sticky;
+      top: 0;
+      z-index: 8;
+      backdrop-filter: blur(8px);
     }
 
     .tab {
       flex: 0 0 auto;
-      padding: 12px 18px;
+      padding: 10px 14px;
       border-radius: 999px;
       background: rgba(255, 248, 238, 0.78);
       color: var(--muted);
@@ -226,7 +230,7 @@
 
     .panel {
       display: grid;
-      gap: 18px;
+      gap: 12px;
     }
 
     .card,
@@ -238,25 +242,25 @@
     }
 
     .card {
-      padding: 22px;
+      padding: 16px;
     }
 
     .section-title {
-      margin: 0 0 6px;
-      font-size: 1.2rem;
+      margin: 0 0 4px;
+      font-size: 1.08rem;
       font-family: var(--font-serif);
       color: var(--accent-deep);
     }
 
     .section-subtitle {
-      margin: 0 0 18px;
-      line-height: 1.65;
+      margin: 0 0 12px;
+      line-height: 1.55;
       color: var(--muted);
     }
 
     .form-grid {
       display: grid;
-      gap: 16px;
+      gap: 12px;
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
@@ -270,7 +274,7 @@
 
     .field {
       display: grid;
-      gap: 8px;
+      gap: 6px;
       align-content: start;
     }
 
@@ -280,7 +284,7 @@
 
     .field > span,
     .field-title {
-      font-size: 0.92rem;
+      font-size: 0.86rem;
       font-weight: 700;
       color: var(--accent-deep);
     }
@@ -290,7 +294,7 @@
     .field textarea,
     .field select {
       width: 100%;
-      padding: 12px 14px;
+      padding: 10px 12px;
       border-radius: var(--radius-md);
       border: 1px solid rgba(189, 164, 127, 0.6);
       background: var(--card-strong);
@@ -307,9 +311,9 @@
     }
 
     .field textarea {
-      min-height: 110px;
+      min-height: 92px;
       resize: vertical;
-      line-height: 1.65;
+      line-height: 1.55;
     }
 
     .hint {
@@ -320,15 +324,15 @@
 
     .repeatable-list {
       display: grid;
-      gap: 16px;
+      gap: 10px;
     }
 
     .repeatable-head {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 18px;
+      gap: 10px;
+      margin-bottom: 12px;
     }
 
     .repeatable-head .btn {
@@ -342,41 +346,42 @@
     .repeatable-summary {
       display: flex;
       justify-content: space-between;
-      gap: 16px;
+      gap: 12px;
       align-items: center;
-      padding: 18px 22px;
+      padding: 12px 16px;
       background: linear-gradient(180deg, rgba(255, 248, 238, 0.92), rgba(255, 248, 238, 0.72));
       border-bottom: 1px solid rgba(189, 164, 127, 0.34);
     }
 
     .repeatable-summary h3 {
       margin: 0;
-      font-size: 1rem;
+      font-size: 0.95rem;
       color: var(--accent-deep);
     }
 
     .repeatable-summary p {
-      margin: 6px 0 0;
+      margin: 4px 0 0;
       color: var(--muted);
-      font-size: 0.92rem;
+      font-size: 0.84rem;
+      line-height: 1.45;
     }
 
     .repeatable-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 6px;
       justify-content: flex-end;
     }
 
     .repeatable-actions .btn {
-      padding: 9px 12px;
-      font-size: 0.92rem;
+      padding: 7px 10px;
+      font-size: 0.84rem;
     }
 
     .repeatable-body {
-      padding: 22px;
+      padding: 14px 16px 16px;
       display: grid;
-      gap: 20px;
+      gap: 14px;
     }
 
     .repeatable-card.collapsed .repeatable-body {
@@ -385,19 +390,19 @@
 
     .check-grid {
       display: grid;
-      gap: 12px;
+      gap: 10px;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     }
 
     .check-group {
-      padding: 16px;
+      padding: 12px;
       border-radius: var(--radius-lg);
       border: 1px solid rgba(189, 164, 127, 0.34);
       background: rgba(255, 252, 247, 0.82);
     }
 
     .check-group h4 {
-      margin: 0 0 12px;
+      margin: 0 0 8px;
       font-size: 1rem;
       color: var(--accent-deep);
     }
@@ -405,9 +410,9 @@
     .check-item,
     .toggle-row {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       align-items: flex-start;
-      margin: 10px 0;
+      margin: 8px 0;
     }
 
     .check-item input,
@@ -423,13 +428,13 @@
 
     .image-panel {
       display: grid;
-      gap: 12px;
+      gap: 10px;
     }
 
     .image-toolbar {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 8px;
       align-items: center;
     }
 
@@ -447,7 +452,7 @@
 
     .image-grid {
       display: grid;
-      gap: 14px;
+      gap: 10px;
       grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     }
 
@@ -457,13 +462,13 @@
       border-radius: var(--radius-lg);
       border: 1px solid rgba(189, 164, 127, 0.42);
       background: rgba(255, 255, 255, 0.85);
-      min-height: 180px;
+      min-height: 160px;
     }
 
     .image-card img {
       display: block;
       width: 100%;
-      height: 180px;
+      height: 160px;
       object-fit: cover;
       background: #f1e5d6;
     }
@@ -473,7 +478,7 @@
       justify-content: space-between;
       align-items: center;
       gap: 10px;
-      padding: 10px 12px;
+      padding: 8px 10px;
     }
 
     .image-card strong {
@@ -491,7 +496,7 @@
     }
 
     .empty-state {
-      padding: 18px;
+      padding: 14px;
       border: 1px dashed rgba(189, 164, 127, 0.7);
       border-radius: var(--radius-lg);
       background: rgba(255, 250, 243, 0.62);
@@ -499,8 +504,8 @@
     }
 
     .notice {
-      margin-top: 18px;
-      padding: 14px 16px;
+      margin-top: 12px;
+      padding: 12px 14px;
       border-radius: var(--radius-lg);
       background: rgba(239, 224, 203, 0.65);
       color: var(--accent-deep);
@@ -509,23 +514,23 @@
     }
 
     .footer-note {
-      margin-top: 18px;
+      margin-top: 12px;
       text-align: center;
       color: var(--muted);
-      font-size: 0.92rem;
+      font-size: 0.86rem;
     }
 
     .mini-table {
       display: grid;
-      gap: 12px;
+      gap: 10px;
     }
 
     .mini-row {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr)) 120px 120px;
-      gap: 10px;
+      gap: 8px;
       align-items: end;
-      padding: 14px;
+      padding: 10px 12px;
       border-radius: var(--radius-lg);
       background: rgba(255, 252, 247, 0.88);
       border: 1px solid rgba(189, 164, 127, 0.34);
@@ -548,8 +553,29 @@
     .pill-list {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 10px;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .quick-index {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .quick-chip {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(189, 164, 127, 0.36);
+      background: rgba(255, 248, 238, 0.72);
+      color: var(--accent-deep);
+      font-size: 0.82rem;
+      white-space: nowrap;
+    }
+
+    .quick-chip:hover {
+      box-shadow: 0 8px 18px rgba(137, 92, 49, 0.10);
     }
 
     @media (max-width: 1024px) {
@@ -636,7 +662,7 @@
       const STORAGE_KEY = "novel-manga-checklist-yaorao-first3-v1";
       const APP_VERSION = 1;
       const APP_TITLE = "小说改编 AI 漫剧制作清单";
-      const SAMPLE_HASH = "#yaorao-first3";
+      const SAMPLE_HASH = "#yaorao-volume1";
       const app = document.getElementById("app");
       const importInput = document.getElementById("import-input");
 
@@ -653,7 +679,6 @@
         { id: "audio", label: "音乐音效" },
         { id: "editing", label: "剪辑执行" },
         { id: "quality", label: "质量检查" },
-        { id: "folders", label: "文件夹模板" },
         { id: "demoChecklist", label: "Demo 开工版" }
       ];
 
@@ -664,8 +689,7 @@
         "props": () => createProp(),
         "storyboards": (arr) => createStoryboard(arr.length + 1),
         "voiceLines": (arr) => createVoiceLine(arr.length + 1),
-        "audio.backgroundMusic": () => createBgmRow(),
-        "folders": () => createFolder()
+        "audio.backgroundMusic": () => createBgmRow()
       };
 
       let saveStateLabel = "saved";
@@ -965,24 +989,31 @@
         });
       }
 
-      function buildYaoraoFirstThreeChaptersTemplate(template) {
-        template.projectInfo.projectName = "《妖娆召唤师》前 3 章漫剧改编策划";
+      function collapseSeededItems(items, expandedCount) {
+        items.forEach((item, index) => {
+          item.collapsed = index >= expandedCount;
+        });
+      }
+
+      function buildYaoraoVolumeOneTemplate(template) {
+        template.projectInfo.projectName = "《妖娆召唤师》第一卷《朱雀异世》漫剧改编策划";
         template.projectInfo.novelName = "《妖娆召唤师》";
-        template.projectInfo.chapterRange = "第一卷《朱雀异世》001-003";
-        template.projectInfo.episodePlan = "按前三章拆成 3 集短漫剧，每集 60-90 秒";
-        template.projectInfo.episodeDuration = "单集 01:00-01:30";
+        template.projectInfo.chapterRange = "第一卷《朱雀异世》001-040";
+        template.projectInfo.episodePlan = "按 6 段剧情弧线拆成 12-16 集短漫剧，前 3 集做世界观与父女关系引爆";
+        template.projectInfo.episodeDuration = "单集 60-100 秒";
         template.projectInfo.ratio = "竖屏 9:16";
-        template.projectInfo.targetPlatforms = "抖音 / 视频号 / 小红书";
-        template.projectInfo.style = "爆笑女强 + 东方玄幻 + 危险童话感 + 反差式父女关系";
-        template.projectInfo.audience = "女频玄幻用户 / 轻爽文短剧受众 / 喜欢成长型女主的动画用户";
-        template.projectInfo.updateFrequency = "前三章可先做 3 集试播，后续按剧情高点周更";
+        template.projectInfo.targetPlatforms = "抖音 / 视频号 / 小红书 / B站";
+        template.projectInfo.style = "女强成长 + 东方玄幻 + 荒诞喜剧 + 高燃反杀";
+        template.projectInfo.audience = "女频玄幻爽文受众 / 短剧用户 / 喜欢高反差父女线和成长升级线的观众";
+        template.projectInfo.updateFrequency = "可先做 6 集首波上线，验证角色调性后周更";
 
         markChecklistDone(template.workflow.planning, [
           "确定改编章节",
           "确定单集时长",
           "确定改编方式（旁白型 / 对话型 / 高燃剪辑型）",
           "确定整体画风",
-          "确定角色视觉统一方案"
+          "确定角色视觉统一方案",
+          "确定制作工具（Gemini / 剪映 / Runway / 其他）"
         ]);
         markChecklistDone(template.workflow.adaptation, [
           "提炼章节梗概",
@@ -992,61 +1023,115 @@
           "生成分镜脚本",
           "整理旁白和台词"
         ]);
+        markChecklistDone(template.workflow.visuals, [
+          "生成人物三视图",
+          "生成人物表情图",
+          "生成关键动作图",
+          "生成场景图",
+          "生成道具/灵兽/特效图",
+          "统一角色脸部和服装细节"
+        ]);
+        markChecklistDone(template.workflow.audio, [
+          "整理角色台词",
+          "整理旁白文案",
+          "准备背景音乐",
+          "准备音效"
+        ]);
 
-        const episode1 = createEpisode();
-        episode1.volumeName = "第一卷 朱雀异世";
-        episode1.chapterName = "001：乖，叫爹";
-        episode1.sourceRange = "第 1 章开篇至疯子再次抱起妖娆认女";
-        episode1.targetDuration = "75-90 秒";
-        episode1.logline = "妖娆二次穿越后在荒野中以新生女婴身份醒来，先遇到一个可怖又疯狂的疤脸男人；认女、异象、杀机和再度抱回，让这段父女缘从第一眼就带着强烈反差。";
-        episode1.highlights = "看点1：荒野出生，直接把世界危险度拉满。\n看点2：疯爹认女引出万丈天光与万兽朝拜，视觉记忆点强。\n看点3：掐脖审判、灭魔之光、爬行逃生、再度认女，情绪起伏极大。";
-        episode1.openingEmotion = "惊悚压迫";
-        episode1.middleEmotion = "荒诞神迹";
-        episode1.climaxEmotion = "死亡逼近";
-        episode1.endingEmotion = "温柔但不稳定";
-        episode1.notes = "这一集重点建立疯爹与妖娆的反差关系，同时抛出妖娆前世身份与暗珠隐患。";
+        const arc1 = createEpisode();
+        arc1.volumeName = "第一卷 朱雀异世";
+        arc1.chapterName = "弧线1：荒野认父与黑珠净化";
+        arc1.sourceRange = "001-003";
+        arc1.targetDuration = "3 集 / 75-100 秒";
+        arc1.logline = "妖娆二次穿越成婴儿，在万兽荒野中被疤脸疯子强行认女；经历灭魔审判、药锅激灵、黑珠取出后，父女关系从惊悚走向荒诞而真诚的绑定。";
+        arc1.highlights = "看点1：开局婴儿求生 + 万兽环伺，危险度直接拉满。\n看点2：疯爹认女引发万丈天光、百鸟齐鸣、万兽朝拜。\n看点3：药锅激灵、净化黑珠、神王小强，调性从高压过渡到反差喜剧。";
+        arc1.openingEmotion = "惊悚压迫";
+        arc1.middleEmotion = "神迹与荒诞";
+        arc1.climaxEmotion = "生死反转";
+        arc1.endingEmotion = "荒野亲情建立";
+        arc1.notes = "适合作为首波试播核心段落，能最快打出世界观和人物关系记忆点。";
 
-        const episode2 = createEpisode();
-        episode2.volumeName = "第一卷 朱雀异世";
-        episode2.chapterName = "002：不要煮了我";
-        episode2.sourceRange = "白雾森林药锅段至疯子取出黑色魔珠";
-        episode2.targetDuration = "80-95 秒";
-        episode2.logline = "疯爹看似要把妖娆炖给魔狼吃，实际上却用灵基液般的药锅强行激发她的灵力；当上一世的黑色魔珠再度现身，疯爹竟用自己的血和不可思议的术法为她净化危机。";
-        episode2.highlights = "看点1：巨锅白烟 + 狼群环伺，视觉上又危险又荒诞。\n看点2：妖娆婴儿状态爆灵力，和前世天才体质形成强反差。\n看点3：黑珠暴露、净化法则、银手取珠，让疯爹身份更神秘。";
-        episode2.openingEmotion = "荒诞惊恐";
-        episode2.middleEmotion = "震惊提升";
-        episode2.climaxEmotion = "痛苦净化";
-        episode2.endingEmotion = "真正接纳";
-        episode2.notes = "这一集适合突出‘疯子其实在保护女儿’的反转，人物关系会明显升温。";
+        const arc2 = createEpisode();
+        arc2.volumeName = "第一卷 朱雀异世";
+        arc2.chapterName = "弧线2：荒野训练与出谷准备";
+        arc2.sourceRange = "004-007";
+        arc2.targetDuration = "2-3 集 / 70-90 秒";
+        arc2.logline = "十四岁的妖娆学会利用疯爹的失忆和恐虫弱点榨取武技、抢夺资源，还把猿王、狼群和幻兽们都纳入自己的成长路线，最终与疯爹约定出谷找娘。";
+        arc2.highlights = "看点1：神王戏法反复拿捏疯爹，喜剧节奏稳定。\n看点2：纵世破天剑诀、驭兽环、抢猿王，女主实力框架成形。\n看点3：离谷前的父女告别感，让后续入世有情感锚点。";
+        arc2.openingEmotion = "轻松狡黠";
+        arc2.middleEmotion = "野路子升级";
+        arc2.climaxEmotion = "出谷决心";
+        arc2.endingEmotion = "不舍与期待";
+        arc2.notes = "这一段是把女主从“被保护的小孩”切到“能主动抢资源的成长型主角”的关键。";
 
-        const episode3 = createEpisode();
-        episode3.volumeName = "第一卷 朱雀异世";
-        episode3.chapterName = "003：女儿是神王！";
-        episode3.sourceRange = "十四年后月下修炼至疯爹把小强认成大魔王";
-        episode3.targetDuration = "90-100 秒";
-        episode3.logline = "十四年后，妖娆已成长为狡黠腹黑的少女，她一边偷偷修炼暗元素，一边在疯爹失忆时用‘神王戏法’把危险变成笑料，荒野父女日常从生死边缘转向反差式爆笑。";
-        episode3.highlights = "看点1：时间跳转后少女妖娆正式亮相，角色成长立住。\n看点2：黑珠成为项链，暗元素修炼让她主动拥抱‘禁忌力量’。\n看点3：疯爹失忆后杀无赦，下一秒却被小强吓退，喜剧反差极强。";
-        episode3.openingEmotion = "冷夜修炼";
-        episode3.middleEmotion = "爆笑反转";
-        episode3.climaxEmotion = "腹黑控场";
-        episode3.endingEmotion = "轻松但带成长野心";
-        episode3.notes = "第三集主要完成少女态亮相、黑珠转为可用力量，以及疯爹失忆喜剧模式的建立。";
+        const arc3 = createEpisode();
+        arc3.volumeName = "第一卷 朱雀异世";
+        arc3.chapterName = "弧线3：离谷入世与出云学院登场";
+        arc3.sourceRange = "008-010";
+        arc3.targetDuration = "2 集 / 60-80 秒";
+        arc3.logline = "妖娆和疯爹离开森林后，以一种又穷又疯的方式初入人间；在找娘失败、驭兽环留底、剑诀到手后，妖娆独自踏入出云学院，为正式升级做准备。";
+        arc3.highlights = "看点1：荒野父女进城，自带强烈反差喜感。\n看点2：‘名为爹爹的味道’适合做短剧情感小爆点。\n看点3：出云学院登场，把故事从森林线切到学院成长线。";
+        arc3.openingEmotion = "落魄但温暖";
+        arc3.middleEmotion = "人间荒诞";
+        arc3.climaxEmotion = "告别与独立";
+        arc3.endingEmotion = "进入新世界";
+        arc3.notes = "建议把疯爹离场做得更有情感重量，让观众接受女主单线成长。";
 
-        template.episodes = [episode1, episode2, episode3];
+        const arc4 = createEpisode();
+        arc4.volumeName = "第一卷 朱雀异世";
+        arc4.chapterName = "弧线4：招生试炼与水下宫殿支线";
+        arc4.sourceRange = "011-018";
+        arc4.targetDuration = "3 集 / 70-95 秒";
+        arc4.logline = "妖娆带着一币之恩的因果进入出云学院招生与测试，在‘废材’标签和强韧生存力之间不断打脸，随后意外切入水下宫殿和老章鱼的任务交易。";
+        arc4.highlights = "看点1：万年不遇的天才 / 废材双重反差。\n看点2：学院测试自带闯关节奏，适合改成连续爽点。\n看点3：水下宫殿、青鲨、老章鱼交易，让世界观立体起来。";
+        arc4.openingEmotion = "紧张竞争";
+        arc4.middleEmotion = "扛压求生";
+        arc4.climaxEmotion = "深水奇遇";
+        arc4.endingEmotion = "危险交易";
+        arc4.notes = "这一段适合用更快的剪辑节奏，制造‘学院不是安全区’的感觉。";
+
+        const arc5 = createEpisode();
+        arc5.volumeName = "第一卷 朱雀异世";
+        arc5.chapterName = "弧线5：丹系成长、幻器线索与属性暴露";
+        arc5.sourceRange = "019-029";
+        arc5.targetDuration = "3-4 集 / 75-95 秒";
+        arc5.logline = "妖娆在学院里转入丹系、和法伊混成古怪炼丹组合，还接触到了幻器、植系战兽与属性测试；当暗系与光系冲突彻底爆发，她被逼入真正的生死一线。";
+        arc5.highlights = "看点1：丹系学徒 + 初次炼丹，让女主成长线更有技术流爽感。\n看点2：银耳钉、花见花不开、属性爆发，视觉设定密集。\n看点3：光系神罚、生死战、逃离学院，把节奏推向第一卷中段高潮。";
+        arc5.openingEmotion = "轻喜成长";
+        arc5.middleEmotion = "设定堆高";
+        arc5.climaxEmotion = "追杀爆发";
+        arc5.endingEmotion = "仓皇逃亡";
+        arc5.notes = "这一段角色、道具、技能信息量最大，页面归类时需要保持条目清晰。";
+
+        const arc6 = createEpisode();
+        arc6.volumeName = "第一卷 朱雀异世";
+        arc6.chapterName = "弧线6：魔云宗潜伏、龙觉、纳多多与炎凰通灵";
+        arc6.sourceRange = "030-040";
+        arc6.targetDuration = "4 集 / 80-100 秒";
+        arc6.logline = "妖娆误入魔云宗后被迫以‘邪恶魔女’姿态潜伏，在龙觉、东冥、纳多多之间周旋布局，最终完成史上最强通灵，唤出炎凰，把第一卷命运线彻底点燃。";
+        arc6.highlights = "看点1：魔女伪装线让妖娆从学院少女切到危险猎手。\n看点2：龙觉与纳多多分别提供情感张力和爆笑张力。\n看点3：炎凰通灵与火羽印记是第一卷收官级高燃镜头。";
+        arc6.openingEmotion = "危机压顶";
+        arc6.middleEmotion = "暗线博弈";
+        arc6.climaxEmotion = "高燃通灵";
+        arc6.endingEmotion = "命运被点亮";
+        arc6.notes = "第一卷结尾必须做成真正的通灵爽点，为第二卷的身份转折蓄势。";
+
+        template.episodes = [arc1, arc2, arc3, arc4, arc5, arc6];
+        collapseSeededItems(template.episodes, 2);
 
         const yaorao = createCharacter();
         yaorao.name = "妖娆";
-        yaorao.identity = "穿越女主 / 前世光明神殿圣女 / 今生疯子养大的少女";
-        yaorao.ageAppearance = "前两章是新生女婴，第 3 章已成长为 14 岁少女";
+        yaorao.identity = "穿越女主 / 前世光明神殿圣女 / 今生从荒野成长起来的少女";
+        yaorao.ageAppearance = "第一卷覆盖婴儿期到 14 岁少女期";
         yaorao.keywords = "腹黑、求生欲强、聪明、记仇、成长型女强";
         yaorao.positioning = "主角";
-        yaorao.appearance = "婴儿阶段圆脸大眼、粉色襁褓；少女阶段月下清丽、眼神灵活锋利，玉颈系黑珠。";
-        yaorao.outfit = "婴儿期以襁褓和泥水状态为主；少女期是荒野生活下的轻便短装，强调敏捷和灵气。";
+        yaorao.appearance = "婴儿期圆脸大眼、满身泥水也不失灵气；少女期瘦削敏捷、眼神锋利，颈间常挂黑珠，后期能在学院与魔云宗两种气质间切换。";
+        yaorao.outfit = "荒野轻便短装、学院学员装、潜伏魔云宗时的暗色系造型都要统一成同一张脸。";
         yaorao.color = "粉白 / 月银 / 暗紫黑";
-        yaorao.expressions = "惊惧\n嫌弃\n倔强\n腹黑微笑\n月下冷静";
-        yaorao.actions = "嚎哭求生\n泥地爬行\n药锅扑腾\n吸收暗元素\n掏出小强忽悠疯爹";
+        yaorao.expressions = "惊惧\n嫌弃\n倔强\n腹黑微笑\n冷脸算计\n高燃通灵";
+        yaorao.actions = "泥地爬行\n药锅扑腾\n掏小强忽悠疯爹\n炼丹\n逃亡战斗\n通灵召唤";
         yaorao.voiceType = "少女音";
-        yaorao.prompt = "妖娆分双阶段设定：新生女婴圆脸大眼、粉色襁褓或泥泞状态；十四岁少女月下修炼，黑珠挂颈，眼神狡黠清亮。东方玄幻动画感，柔和笔触，高级插画质感，cinematic composition。";
+        yaorao.prompt = "Chinese fantasy heroine, newborn baby phase and teenage girl phase unified by eyes and face shape, black bead necklace, agile body, sly but warm expression, strong female lead, high-detail animated fantasy illustration";
 
         const crazyDad = createCharacter();
         crazyDad.name = "疯子爹爹";
@@ -1076,7 +1161,106 @@
         qingtou.voiceType = "其他";
         qingtou.prompt = "four-star spirit wolf pack, dark fur, glowing green eyes, strong but submissive around the girl, fantasy beast animation style";
 
-        template.characters = [yaorao, crazyDad, qingtou];
+        const oldApe = createCharacter();
+        oldApe.name = "老黑猿";
+        oldApe.identity = "猿飞山谷领主 / 被妖娆坑到怀疑人生的老猿王";
+        oldApe.ageAppearance = "苍老巨猿，体格庞大，情绪反应夸张";
+        oldApe.keywords = "暴躁、憋屈、被强盗少女反复拿捏";
+        oldApe.positioning = "配角";
+        oldApe.appearance = "黑色长毛、手臂粗壮，适合做气急败坏喜剧表演。";
+        oldApe.outfit = "无";
+        oldApe.color = "炭黑 / 灰棕";
+        oldApe.expressions = "暴怒\n委屈\n抓狂";
+        oldApe.actions = "扑击\n举石\n护宝";
+        oldApe.voiceType = "大叔音";
+        oldApe.prompt = "old giant black ape king, comedic rage, fantasy beast, mountain valley setting, animated adventure style";
+
+        const huangshan = createCharacter();
+        huangshan.name = "荒山导师";
+        huangshan.identity = "出云学院导师";
+        huangshan.ageAppearance = "高大沉稳的成年男性";
+        huangshan.keywords = "克制、公正、靠谱";
+        huangshan.positioning = "助力角色";
+        huangshan.appearance = "身形高、脸部线条硬朗，学院导师装束简洁。";
+        huangshan.outfit = "学院导师长袍";
+        huangshan.color = "岩灰 / 深青";
+        huangshan.expressions = "严肃\n无奈\n认可";
+        huangshan.actions = "带路\n观战\n压场";
+        huangshan.voiceType = "大叔音";
+        huangshan.prompt = "tall academy mentor, stern but reliable, fantasy school uniform, understated heroic presence";
+
+        const fayi = createCharacter();
+        fayi.name = "法伊";
+        fayi.identity = "丹系怪老头 / 炼药师";
+        fayi.ageAppearance = "白发鹰钩鼻老人，笑容猥琐但脑子很活";
+        fayi.keywords = "古怪、贪财、技术流、嘴碎";
+        fayi.positioning = "助力角色";
+        fayi.appearance = "白发蓝眼、穿得破旧却很有辨识度。";
+        fayi.outfit = "旧药师袍 / 带药袋";
+        fayi.color = "灰白 / 靛蓝";
+        fayi.expressions = "兴奋\n猥琐笑\n得意";
+        fayi.actions = "抓人进丹房\n指点炼药\n讨价还价";
+        fayi.voiceType = "大叔音";
+        fayi.prompt = "eccentric old alchemist, white hair, blue eyes, hooked nose, shabby robe, funny but brilliant fantasy pharmacist";
+
+        const octopus = createCharacter();
+        octopus.name = "老章鱼";
+        octopus.identity = "水下宫殿强者 / 交易者";
+        octopus.ageAppearance = "巨大章鱼形态，老谋深算";
+        octopus.keywords = "圆滑、精明、敬畏妖娆";
+        octopus.positioning = "配角";
+        octopus.appearance = "巨大触手、宫殿感场景中带喜感压迫。";
+        octopus.outfit = "无";
+        octopus.color = "深紫 / 海蓝";
+        octopus.expressions = "震惊\n讨好\n肉痛";
+        octopus.actions = "挥触手\n递宝物\n谈交易";
+        octopus.voiceType = "其他";
+        octopus.prompt = "giant wise octopus in underwater palace, comic negotiation mood, fantasy creature with expressive eyes";
+
+        const longjue = createCharacter();
+        longjue.name = "龙觉";
+        longjue.identity = "被困龙锁束缚的神秘红发少年";
+        longjue.ageAppearance = "俊美少年，偏病弱但气质危险";
+        longjue.keywords = "神秘、傲娇、危险、情感张力";
+        longjue.positioning = "助力角色";
+        longjue.appearance = "红发、五官精致、被束缚时更显脆弱感。";
+        longjue.outfit = "囚系感衣装 / 破损华贵元素";
+        longjue.color = "赤红 / 冷白";
+        longjue.expressions = "冷眼\n隐忍\n心动";
+        longjue.actions = "被锁住\n被溜着走\n低声交谈";
+        longjue.voiceType = "少年音";
+        longjue.prompt = "mysterious red-haired fantasy boy, bound by magical chain, pale skin, dangerous beauty, anime epic style";
+
+        const naduoduo = createCharacter();
+        naduoduo.name = "纳多多";
+        naduoduo.identity = "妖娆的魔仆 / 大魔王系喜剧担当";
+        naduoduo.ageAppearance = "小体型暗系召唤物，表情极其丰富";
+        naduoduo.keywords = "嘴硬、戏多、黑色幽默";
+        naduoduo.positioning = "助力角色";
+        naduoduo.appearance = "小黑炉或暗系召唤物形态，偏夸张卡通。";
+        naduoduo.outfit = "无";
+        naduoduo.color = "炭黑 / 紫焰";
+        naduoduo.expressions = "不屑\n得意\n看戏";
+        naduoduo.actions = "跳出黑炉\n配合坑人\n回炉睡觉";
+        naduoduo.voiceType = "其他";
+        naduoduo.prompt = "small dark familiar with comedic arrogance, black-purple magic energy, exaggerated animated expression";
+
+        const dongming = createCharacter();
+        dongming.name = "东冥";
+        dongming.identity = "魔云宗大长老 / 第一卷后段核心反派";
+        dongming.ageAppearance = "年长强者，压迫感强";
+        dongming.keywords = "贪婪、阴狠、老谋深算";
+        dongming.positioning = "反派";
+        dongming.appearance = "深色长袍，眼神阴鸷，像要把妖娆生吞。";
+        dongming.outfit = "魔宗长老袍";
+        dongming.color = "黑紫 / 冷绿";
+        dongming.expressions = "试探\n阴笑\n失控";
+        dongming.actions = "观察\n设局\n被反坑";
+        dongming.voiceType = "大叔音";
+        dongming.prompt = "dark sect elder, sinister eyes, black-purple robe, greedy and dangerous fantasy villain";
+
+        template.characters = [yaorao, crazyDad, qingtou, oldApe, huangshan, fayi, octopus, longjue, naduoduo, dongming];
+        collapseSeededItems(template.characters, 3);
 
         const wilderness = createScene();
         wilderness.name = "万兽荒野与阴森林海";
@@ -1118,15 +1302,96 @@
         moonCamp.colorKeywords = "月银 / 暗紫 / 夜蓝 / 火光金";
         moonCamp.prompt = "moonlit fantasy valley, teenage girl training dark element, mysterious bead on red string, sharp yet playful atmosphere";
 
-        template.scenes = [wilderness, holyClearing, potionForest, moonCamp];
+        const apeValley = createScene();
+        apeValley.name = "猿飞山谷";
+        apeValley.purpose = "战斗";
+        apeValley.description = "老黑猿的领地，适合表现妖娆离谷前的强盗式成长与荒野训练。";
+        apeValley.time = "白天";
+        apeValley.mood = "高燃";
+        apeValley.visualStyle = "山谷落差、巨猿体型压迫、偏热血冒险风。";
+        apeValley.colorKeywords = "岩褐 / 森绿 / 日照金";
+        apeValley.prompt = "mountain ape valley, giant black ape, adventurous fantasy action scene";
+
+        const borderCity = createScene();
+        borderCity.name = "边陲小城与风月楼门口";
+        borderCity.purpose = "对话";
+        borderCity.description = "妖娆和疯爹第一次进入人类城市，街景繁杂，风月楼外形成强烈荒野与俗世反差。";
+        borderCity.time = "黄昏";
+        borderCity.mood = "荒诞";
+        borderCity.visualStyle = "热闹俗世、红灯、烟火气。";
+        borderCity.colorKeywords = "红灯 / 暮金 / 市井棕";
+        borderCity.prompt = "fantasy border city street, brothel entrance, scruffy father and daughter, comic contrast";
+
+        const academyGate = createScene();
+        academyGate.name = "出云学院招生区";
+        academyGate.purpose = "开场";
+        academyGate.description = "学院外场、试炼空间与人群围观是第一卷中段的重要场景。";
+        academyGate.time = "白天";
+        academyGate.mood = "紧张";
+        academyGate.visualStyle = "学院宏大感 + 少年试炼感。";
+        academyGate.colorKeywords = "石灰 / 学院蓝 / 旗帜红";
+        academyGate.prompt = "fantasy academy entrance, crowded trials, ambitious youths, eastern fantasy school";
+
+        const underwaterPalace = createScene();
+        underwaterPalace.name = "水下宫殿";
+        underwaterPalace.purpose = "回忆";
+        underwaterPalace.description = "学院东门大湖之下的奇幻宫殿，章鱼与青鲨让这个支线很有视觉记忆点。";
+        underwaterPalace.time = "夜晚";
+        underwaterPalace.mood = "神秘";
+        underwaterPalace.visualStyle = "深水蓝绿、光泡、巨型生物。";
+        underwaterPalace.colorKeywords = "深海蓝 / 荧光青 / 宫殿金";
+        underwaterPalace.prompt = "underwater fantasy palace, giant octopus, glowing blue-green light, magical deep sea";
+
+        const alchemyRoom = createScene();
+        alchemyRoom.name = "丹房与药材室";
+        alchemyRoom.purpose = "对话";
+        alchemyRoom.description = "法伊带妖娆第一次炼丹的核心室内场景，适合做技术成长蒙太奇。";
+        alchemyRoom.time = "白天";
+        alchemyRoom.mood = "治愈";
+        alchemyRoom.visualStyle = "温暖、乱中有序、药香四溢。";
+        alchemyRoom.colorKeywords = "草药绿 / 铜棕 / 炉火橙";
+        alchemyRoom.prompt = "fantasy alchemy room, herbs and furnace, eccentric old alchemist teaching a girl";
+
+        const testGround = createScene();
+        testGround.name = "属性测试场与炎蛇战场";
+        testGround.purpose = "战斗";
+        testGround.description = "属性爆发后，学院试场立刻变成追杀战场，适合做第一卷中段的高压战斗。";
+        testGround.time = "白天";
+        testGround.mood = "压迫";
+        testGround.visualStyle = "大地裂火、炎蛇、学员四散。";
+        testGround.colorKeywords = "火橙 / 烟灰 / 警戒红";
+        testGround.prompt = "academy testing ground turned battlefield, fire snake summon, panic and magic explosion";
+
+        const moyun = createScene();
+        moyun.name = "魔云宗地宫与囚室";
+        moyun.purpose = "高潮";
+        moyun.description = "第一卷后段核心反派空间，潮湿、压抑、带邪宗秩序感。";
+        moyun.time = "夜晚";
+        moyun.mood = "压迫";
+        moyun.visualStyle = "黑紫地宫、符文、锁链、暗雾。";
+        moyun.colorKeywords = "黑紫 / 暗红 / 符文灰";
+        moyun.prompt = "dark sect underground prison, chains, black-purple haze, sinister fantasy architecture";
+
+        const phoenixFire = createScene();
+        phoenixFire.name = "炎凰通灵火柱";
+        phoenixFire.purpose = "高潮";
+        phoenixFire.description = "炎凰通灵时直冲天际的火柱和火羽印记，是第一卷收官级别视觉爆点。";
+        phoenixFire.time = "夜晚";
+        phoenixFire.mood = "高燃";
+        phoenixFire.visualStyle = "通天火柱、火羽印记、天地异象。";
+        phoenixFire.colorKeywords = "烈焰金 / 赤红 / 夜蓝";
+        phoenixFire.prompt = "phoenix summoning pillar of fire, scarlet-gold flames, world-shaking fantasy climax";
+
+        template.scenes = [wilderness, holyClearing, potionForest, moonCamp, apeValley, borderCity, academyGate, underwaterPalace, alchemyRoom, testGround, moyun, phoenixFire];
+        collapseSeededItems(template.scenes, 4);
 
         const darkBead = createProp();
         darkBead.name = "黑色魔珠";
         darkBead.owner = "妖娆";
-        darkBead.useCase = "前三章最大暗线设定";
+        darkBead.useCase = "第一卷暗线核心";
         darkBead.appearance = "混沌无光的黑珠，附着过怨灵与邪恶魔气，后被疯爹净化后仍保留暗属性能量。";
         darkBead.material = "黑曜 / 暗雾 / 冷光";
-        darkBead.effect = "吞噬灵力、吸引追杀、后期可吸收暗元素。";
+        darkBead.effect = "吞噬灵力、吸收暗元素、引来光暗双方追杀。";
         darkBead.prompt = "dark magic bead, matte black sphere, faint evil aura removed but still holding dark energy, mysterious fantasy artifact";
 
         const holyLight = createProp();
@@ -1147,55 +1412,118 @@
         spiritBroth.effect = "泡出灵力觉醒、热气压迫、同时形成‘差点被煮了’的荒诞感。";
         spiritBroth.prompt = "giant medicinal cauldron, steam, fantasy herbs, white sakura-like blossom, spiritual awakening scene";
 
-        const purificationBlood = createProp();
-        purificationBlood.name = "净化之血";
-        purificationBlood.owner = "疯子爹爹";
-        purificationBlood.useCase = "压制黑珠反噬 / 保护妖娆";
-        purificationBlood.appearance = "从疯爹手腕滴落的鲜血带着金色圣洁微光，落在妖娆额头时能明显缓解痛苦。";
-        purificationBlood.material = "血红 / 金白圣光";
-        purificationBlood.effect = "缓解魔珠反噬，衬出疯爹身份神秘且愿为女儿自损。";
-        purificationBlood.prompt = "holy blood with golden purification light, dripping from a warrior's wrist, sacred healing energy in dark fantasy";
+        const swordArt = createProp();
+        swordArt.name = "纵世破天剑诀";
+        swordArt.owner = "妖娆 / 疯子爹爹";
+        swordArt.useCase = "第一卷前段武技成长主线";
+        swordArt.appearance = "皱巴巴的小书，但内容是高价值武技口诀。";
+        swordArt.material = "旧纸 / 剑意轨迹";
+        swordArt.effect = "让妖娆在没有正常召唤师优势前也具备战斗反杀能力。";
+        swordArt.prompt = "ancient sword art manual, worn booklet, invisible sword aura trajectories, fantasy martial treasure";
+
+        const beastRing = createProp();
+        beastRing.name = "驭兽环";
+        beastRing.owner = "疯子爹爹 / 妖娆";
+        beastRing.useCase = "荒野到学院阶段的重要底牌";
+        beastRing.appearance = "古老臂环，中间刻着小鸟样纹章，平时不起眼，使用时会泛微光。";
+        beastRing.material = "旧金 / 红光 / 兽纹刻印";
+        beastRing.effect = "帮助不稳定阶段的妖娆建立对幻兽的控制优势。";
+        beastRing.prompt = "ancient beast-control bracer, weathered gold metal, subtle red glow, engraved fantasy bird emblem";
+
+        const silverStud = createProp();
+        silverStud.name = "银耳钉";
+        silverStud.owner = "妖娆";
+        silverStud.useCase = "第一卷学院段的重要幻器线索";
+        silverStud.appearance = "外表普通却内里不凡的小型幻器。";
+        silverStud.material = "银白 / 冷光";
+        silverStud.effect = "牵出幻器等级体系和后续混乱。";
+        silverStud.prompt = "small silver magical earring, deceptively simple fantasy artifact, cool gleam";
+
+        const snowLotus = createProp();
+        snowLotus.name = "圣域雪莲";
+        snowLotus.owner = "妖娆 / 老章鱼交易线";
+        snowLotus.useCase = "学院与章鱼交易线的高价值资源";
+        snowLotus.appearance = "极寒感的圣洁雪莲，花瓣纯净，带稀有药性。";
+        snowLotus.material = "冰白 / 淡蓝";
+        snowLotus.effect = "是交易筹码，也体现妖娆资源整合能力。";
+        snowLotus.prompt = "sacred snow lotus, rare icy holy flower, fantasy medicine ingredient, glowing petals";
+
+        const lock = createProp();
+        lock.name = "困龙锁";
+        lock.owner = "龙觉 / 妖娆";
+        lock.useCase = "魔云宗后段核心道具";
+        lock.appearance = "束缚红发少年的特殊锁具，兼具危险与暧昧张力。";
+        lock.material = "暗金锁链 / 符文";
+        lock.effect = "让龙觉与妖娆的互动天然带控制与反控制的戏剧感。";
+        lock.prompt = "magical dragon-binding chain, engraved runes, dangerous and intimate fantasy restraint";
+
+        const blackFurnace = createProp();
+        blackFurnace.name = "纳多多小黑炉";
+        blackFurnace.owner = "纳多多";
+        blackFurnace.useCase = "魔仆出入与喜剧演出容器";
+        blackFurnace.appearance = "小巧黑炉，平时像不起眼配件，关键时能跳出大魔王气质。";
+        blackFurnace.material = "乌金 / 暗焰";
+        blackFurnace.effect = "兼具道具感和角色感，适合做反差萌。";
+        blackFurnace.prompt = "tiny black magic furnace, dark familiar container, cute but ominous fantasy prop";
 
         const fireWings = createProp();
         fireWings.name = "金光火翼";
         fireWings.owner = "疯子爹爹";
-        fireWings.useCase = "第三章高记忆点特效";
+        fireWings.useCase = "疯爹高记忆点特效";
         fireWings.appearance = "疯爹被吓退时背后骤然炸开的金色火翼，像神兽荣光一样炽亮张扬。";
         fireWings.material = "金焰 / 圣火 / 翼羽光边";
         fireWings.effect = "强化疯爹远超常人的身份感，也能把喜剧瞬间做成史诗反差。";
         fireWings.prompt = "golden fire wings bursting from the back of a scarred warrior, holy beast-like glow, epic fantasy effect";
 
-        template.props = [darkBead, holyLight, spiritBroth, purificationBlood, fireWings];
+        const phoenixMark = createProp();
+        phoenixMark.name = "炎凰火羽印记";
+        phoenixMark.owner = "妖娆";
+        phoenixMark.useCase = "第一卷收官级视觉结果";
+        phoenixMark.appearance = "额头浮现火羽印记，伴随通天火柱与炎凰觉醒。";
+        phoenixMark.material = "火羽金红 / 烈焰纹理";
+        phoenixMark.effect = "一眼能看出主角命运线升级成功。";
+        phoenixMark.prompt = "phoenix feather forehead mark, scarlet-gold magical sigil, awakening fantasy heroine";
+
+        template.props = [darkBead, holyLight, spiritBroth, swordArt, beastRing, silverStud, snowLotus, lock, blackFurnace, fireWings, phoenixMark];
+        collapseSeededItems(template.props, 4);
 
         const storyboards = [
-          { shotNumber: "01", timing: "00:00-00:06", shotSize: "远景", visual: "乌云压顶的荒野林海，兽眼在黑暗中亮起，男人笑声先于画面出现。", action: "先声夺人，建立危险世界。", dialogue: "旁白：林海茫茫，乌云盖顶，这里根本不是养育儿女的地方。", audio: "风声 / 灵兽低吼", note: "章一开场。" },
-          { shotNumber: "02", timing: "00:06-00:12", shotSize: "特写", visual: "蜈蚣疤脸男人兴奋大笑，苍绿色眼珠像盯住猎物一样发亮。", action: "男人俯视新生婴儿，狂笑认女。", dialogue: "疯子爹爹：哈哈哈哈！乖，叫爹！", audio: "狂笑声", note: "疯爹第一记忆点。" },
-          { shotNumber: "03", timing: "00:12-00:18", shotSize: "主观近景", visual: "以妖娆视角看男人可怖的脸，兽眼与风声一起压来。", action: "婴儿惊吓大哭。", dialogue: "旁白：又穿了！一睁眼，就是比死还可怕的一张脸。", audio: "婴儿哭声", note: "突出二穿设定。" },
-          { shotNumber: "04", timing: "00:18-00:28", shotSize: "中远景", visual: "男人把婴儿高举向天，乌云裂开，万丈阳光照下，百鸟齐鸣、万兽朝拜。", action: "认女与异象同时爆发。", dialogue: "疯子爹爹：你是我的女儿！", audio: "恢弘音乐 / 鸟鸣", note: "章一主高潮。" },
-          { shotNumber: "05", timing: "00:28-00:38", shotSize: "中近景", visual: "男人神色骤冷，掐住婴儿脖颈，指尖凝起灭魔之光。", action: "由温情急转审判。", dialogue: "疯子爹爹：我的女儿怎么可能是恶魔！", audio: "紧张低频 / 光点聚能", note: "章一反转。" },
-          { shotNumber: "06", timing: "00:38-00:46", shotSize: "中景", visual: "疯爹抱头发狂，妖娆在泥地里拼命往远处爬。", action: "婴儿状态下求生。", dialogue: "旁白：打不过就逃，哪怕现在只能像毛毛虫一样爬。", audio: "泥水声 / 疯爹捶地声", note: "体现妖娆生存本能。" },
-          { shotNumber: "07", timing: "00:46-00:54", shotSize: "近景", visual: "疯爹吹灭白光，疑惑看着泥里婴儿，随后又把她紧紧抱回胸口。", action: "失忆后重新认女。", dialogue: "疯子爹爹：你是我女儿！我是你爹爹！", audio: "轻松回暖的音乐", note: "章一收尾。" },
-          { shotNumber: "08", timing: "00:54-01:02", shotSize: "远景", visual: "白雾森林里巨锅白烟翻涌，魔狼围观，疯爹把婴儿夹在臂下走向药锅。", action: "像要炖汤的荒诞场景。", dialogue: "旁白：不要煮了我！秒杀也比被煮成肉汤强！", audio: "锅水翻滚 / 狼群咕噜声", note: "章二开场。" },
-          { shotNumber: "09", timing: "01:02-01:10", shotSize: "近景", visual: "妖娆坠入药锅，灵药漂浮，白樱和灵气在水汽里交织。", action: "妖娆被烫得挣扎，灵力却被激发。", dialogue: "旁白：这不是煮汤，是疯子的野路子修炼法！", audio: "药液沸腾 / 灵气嗡鸣", note: "章二修炼反转。" },
-          { shotNumber: "10", timing: "01:10-01:18", shotSize: "特写", visual: "胸口黑色魔珠化作黑洞，吞噬新生灵力。", action: "妖娆痛苦抽搐。", dialogue: "旁白：该死，上一世的黑珠，居然还跟着我！", audio: "心跳 / 低频震动", note: "暗线清晰化。" },
-          { shotNumber: "11", timing: "01:18-01:28", shotSize: "中近景", visual: "疯爹割开手腕，带金光的血滴在妖娆额头上，缓解痛苦。", action: "边敲头边想起净化法则。", dialogue: "疯子爹爹：是净化法则！", audio: "血滴 / 圣光声", note: "突出疯爹守护。"},
-          { shotNumber: "12", timing: "01:28-01:36", shotSize: "特写", visual: "疯爹银色手掌像穿透烟雾般探入妖娆体内，抓出黑珠。", action: "取珠成功，没有伤口。", dialogue: "旁白：他居然徒手把黑珠从我身体里拽了出来。", audio: "抽离声 / 光效脉冲", note: "章二最高记忆点。" },
-          { shotNumber: "13", timing: "01:36-01:44", shotSize: "中景", visual: "疯爹把妖娆从药锅捞起，疲惫地闻了闻她，神情终于放松。", action: "父女关系第一次真正落稳。", dialogue: "疯子爹爹：嗯，果然香多了。", audio: "温暖收束音乐", note: "章二收尾。" },
-          { shotNumber: "14", timing: "01:44-01:54", shotSize: "中景", visual: "十四岁的妖娆在月下闭眼吸收暗元素，黑珠挂在颈间。", action: "时间跳转，少女正式出场。", dialogue: "旁白：被世人唾弃的暗元素又怎样，只要能变强。", audio: "冷月氛围 / 细微能量流动", note: "章三开场。" },
-          { shotNumber: "15", timing: "01:54-02:04", shotSize: "中景", visual: "疯爹忽然恢复威严姿态，冷声说近身女性杀无赦；妖娆却淡定掏出一只小强。", action: "气氛从肃杀秒切爆笑。", dialogue: "妖娆：大胆，在本王面前也敢称本尊？", audio: "冷场后一拍停顿", note: "章三爆点准备。" },
-          { shotNumber: "16", timing: "02:04-02:15", shotSize: "中近景", visual: "疯爹被小强吓得金光火翼炸开，疯狂向后退去。", action: "疯爹把小强认成大魔王，威严瞬间崩塌。", dialogue: "疯子爹爹：这是魔王！大魔王！", audio: "喜剧鼓点 / 翅翼展开音效", note: "章三最大喜剧包袱。" },
-          { shotNumber: "17", timing: "02:15-02:26", shotSize: "特写", visual: "妖娆举着小强，漂亮的小脸上挂着‘果然如此’的腹黑微笑。", action: "妖娆稳稳控场，把疯爹的失忆变成自己的优势。", dialogue: "旁白：这个疯子，早已经是她最舍不得的人。", audio: "轻快诙谐 BGM", note: "章三结尾定格。" }
+          { shotNumber: "01", timing: "00:00-00:06", shotSize: "远景", visual: "乌云压顶的万兽荒野，绿色兽眼一层层亮起。", action: "先声夺人。", dialogue: "旁白：这里不是卧室，而是万兽咆哮的荒野。", audio: "风声 / 兽吼", note: "第一卷开篇。" },
+          { shotNumber: "02", timing: "00:06-00:12", shotSize: "特写", visual: "蜈蚣疤脸男人狂笑认女。", action: "高举婴儿。", dialogue: "疯子爹爹：哈哈哈哈！乖，叫爹！", audio: "狂笑", note: "疯爹开场。" },
+          { shotNumber: "03", timing: "00:12-00:20", shotSize: "中景", visual: "阳光撕开乌云，百鸟与群兽同时朝拜。", action: "认女引发神迹。", dialogue: "疯子爹爹：你是我的女儿！", audio: "史诗 BGM", note: "视觉奇迹点。" },
+          { shotNumber: "04", timing: "00:20-00:28", shotSize: "中近景", visual: "灭魔之光在疯爹指尖凝聚。", action: "温情瞬间反转成审判。", dialogue: "疯子爹爹：我的女儿怎么可能是恶魔！", audio: "聚能高频", note: "惊悚感。" },
+          { shotNumber: "05", timing: "00:28-00:36", shotSize: "远景", visual: "妖娆在泥地里爬，疯爹抱头失控。", action: "婴儿级求生。", dialogue: "旁白：打不过就逃，哪怕只能像毛毛虫一样爬。", audio: "泥水 / 捶地", note: "建立求生本能。" },
+          { shotNumber: "06", timing: "00:36-00:45", shotSize: "中景", visual: "白雾森林里巨锅翻腾，狼群围观。", action: "疯爹夹着妖娆走向药锅。", dialogue: "旁白：不要煮了我！", audio: "锅沸腾 / 狼嚎", note: "荒诞危机。" },
+          { shotNumber: "07", timing: "00:45-00:54", shotSize: "特写", visual: "黑珠在胸口化成黑洞，吞噬灵力。", action: "妖娆痛苦抽搐。", dialogue: "旁白：上一世的黑珠，居然也跟着来了。", audio: "低频脉冲", note: "暗线抛出。" },
+          { shotNumber: "08", timing: "00:54-01:02", shotSize: "中近景", visual: "疯爹割腕滴血，银手穿体取珠。", action: "完成净化。", dialogue: "疯子爹爹：是净化法则！", audio: "圣光 / 抽离声", note: "父爱反转。" },
+          { shotNumber: "09", timing: "01:02-01:10", shotSize: "中景", visual: "十四岁的妖娆月下吸收暗元素，黑珠挂颈。", action: "少女态亮相。", dialogue: "旁白：被唾弃的暗元素又怎样，只要能变强。", audio: "夜色氛围", note: "成长线。" },
+          { shotNumber: "10", timing: "01:10-01:18", shotSize: "中景", visual: "疯爹威严站立，妖娆掏出一只小强。", action: "神王戏法启动。", dialogue: "妖娆：大胆，在本王面前也敢称本尊？", audio: "喜剧停顿", note: "反差喜剧。" },
+          { shotNumber: "11", timing: "01:18-01:26", shotSize: "近景", visual: "疯爹背后炸开金光火翼，惊恐后退。", action: "被小强吓破防。", dialogue: "疯子爹爹：这是魔王！大魔王！", audio: "翅翼炸响", note: "高记忆点。" },
+          { shotNumber: "12", timing: "01:26-01:35", shotSize: "战斗中景", visual: "猿飞山谷里老黑猿暴怒扑来，妖娆身法灵活闪躲。", action: "荒野训练高燃段。", dialogue: "旁白：她连疯子都敢骗，自然也敢抢猿王。", audio: "山石碎裂", note: "弧线2。" },
+          { shotNumber: "13", timing: "01:35-01:43", shotSize: "远景", visual: "父女离开森林，狼群与幻兽们在身后送行。", action: "正式出谷。", dialogue: "旁白：去找娘亲，也去见真正的人间。", audio: "温暖离别 BGM", note: "弧线转场。" },
+          { shotNumber: "14", timing: "01:43-01:51", shotSize: "中景", visual: "边城街市喧闹，疯爹一脸认真指向风月楼。", action: "父女进城喜剧。", dialogue: "疯子爹爹：找到了，这就是娘亲！", audio: "市井环境音", note: "喜剧反差。" },
+          { shotNumber: "15", timing: "01:51-01:59", shotSize: "远景", visual: "出云学院外，人群排队招生测试。", action: "妖娆正式踏入学院线。", dialogue: "旁白：抱着变强和查清黑珠的目标，她站上了选拔场。", audio: "鼓点推进", note: "学院登场。" },
+          { shotNumber: "16", timing: "01:59-02:08", shotSize: "中景", visual: "湖底水下宫殿若隐若现，青鲨从暗处逼近。", action: "妖娆潜入深水奇遇线。", dialogue: "旁白：学院不是安全区，湖底才是真正的门。", audio: "水流 / 压迫低频", note: "水下支线。" },
+          { shotNumber: "17", timing: "02:08-02:16", shotSize: "对话近景", visual: "老章鱼挥舞触手和妖娆讨价还价。", action: "资源交易。", dialogue: "妖娆：五朵雪莲换一人份灵基液。", audio: "水泡 / 轻快机锋", note: "体现资源整合能力。" },
+          { shotNumber: "18", timing: "02:16-02:24", shotSize: "中景", visual: "法伊把妖娆拖进丹房，药炉和药材堆满屋。", action: "丹系成长线开启。", dialogue: "旁白：学院里最离谱的老师，终于遇到最不讲理的学生。", audio: "炉火 / 药罐碰撞", note: "技术成长。" },
+          { shotNumber: "19", timing: "02:24-02:33", shotSize: "中近景", visual: "属性测试场爆光，妖娆转身就逃。", action: "暗属性身份暴露。", dialogue: "旁白：这么狗血，偏偏又发生在她身上。", audio: "尖叫 / 光爆", note: "中段高潮。" },
+          { shotNumber: "20", timing: "02:33-02:42", shotSize: "战斗中景", visual: "炎火巨蛇从地底钻出，对妖娆连喷火球。", action: "生死一线。", dialogue: "旁白：战！不然就死！", audio: "火球轰鸣", note: "追杀战场。" },
+          { shotNumber: "21", timing: "02:42-02:51", shotSize: "远景", visual: "传送卷轴发动，妖娆被抛进阴暗泥地。", action: "从学院逃离到魔云宗。", dialogue: "旁白：一脚踏空，她被扔进了更危险的地方。", audio: "传送风啸", note: "下半卷转场。" },
+          { shotNumber: "22", timing: "02:51-03:00", shotSize: "中景", visual: "龙觉被困龙锁束缚，红发垂落，妖娆蹲在旁边观察。", action: "危险人物登场。", dialogue: "旁白：这次捡到的，不再是疯子，而是条被锁住的龙。", audio: "锁链摩擦", note: "情感张力点。" },
+          { shotNumber: "23", timing: "03:00-03:10", shotSize: "近景", visual: "纳多多从小黑炉里跳出，东冥在暗处露出贪婪笑意。", action: "暗线博弈和反坑开始。", dialogue: "旁白：每个人都想吃掉她，可她偏偏最擅长反吃。", audio: "暗焰 / 阴笑", note: "后段布局。" },
+          { shotNumber: "24", timing: "03:10-03:22", shotSize: "超远景", visual: "通天火柱拔地而起，妖娆额头显现火羽印记，炎凰之影冲上天空。", action: "完成史上最强通灵。", dialogue: "旁白：第一卷的命运，从这一刻开始再也无法更改。", audio: "终章高燃 BGM", note: "第一卷收官。" }
         ];
         template.storyboards = storyboards.map((data, index) => Object.assign(createStoryboard(index + 1), data));
+        collapseSeededItems(template.storyboards, 6);
 
-        template.prompts.character.name = "妖娆 / 疯爹 / 狼群统一角色风格";
-        template.prompts.character.prompt = "Chinese fantasy animation style, bold female lead growing from newborn baby to 14-year-old sharp-eyed girl, scarred crazy father with green eyes and overwhelming power, spirit wolf pack as reluctant helpers, soft painterly strokes, cinematic composition, expressive acting";
+        template.prompts.character.name = "第一卷核心角色统一设定";
+        template.prompts.character.prompt = "Chinese fantasy animation style, strong female lead growing from newborn baby to teenage girl, scarred crazy father, beast wolf helpers, eccentric alchemist, red-haired chained boy, dark familiar, layered fantasy character sheet, expressive acting, cinematic composition";
         template.prompts.character.negative = "realistic gore, photorealistic skin, extra fingers, extra limbs, horror face, broken anatomy, modern clothing, text, watermark";
-        template.prompts.scene.name = "荒野 + 药锅 + 月下山谷";
-        template.prompts.scene.prompt = "dangerous fantasy wilderness, holy miracle clearing, giant medicinal cauldron in mist forest, moonlit valley with dark energy training, East fantasy fairy-tale mood, layered atmosphere, high detail, animated feature illustration";
-        template.prompts.scene.negative = "messy composition, sci-fi city, realistic gore, modern props, washed out colors, blurry";
-        template.prompts.shot.name = "第 3 章神王与小强反转";
-        template.prompts.shot.prompt = "teenage girl calmly holding a cockroach, scarred crazy father exploding golden fire wings in terror, absurd comedy inside epic fantasy animation, strong acting, cinematic frame";
+        template.prompts.scene.name = "第一卷核心场景合集";
+        template.prompts.scene.prompt = "wilderness forest sea, miracle sunbeam clearing, ape valley, border city street, fantasy academy, underwater palace, alchemy room, dark sect dungeon, phoenix fire pillar, East fantasy animated feature style, layered atmosphere";
+        template.prompts.scene.negative = "sci-fi city, realistic gore, modern props, messy composition, washed out colors, blurry";
+        template.prompts.shot.name = "第一卷终章炎凰通灵";
+        template.prompts.shot.prompt = "teenage fantasy heroine with phoenix feather mark on forehead, pillar of fire rising to the sky, red-gold phoenix silhouette, epic eastern fantasy animation, high-impact climax shot";
         template.prompts.shot.negative = "gross insect realism, horror gore, deformed body, low quality, text, watermark";
 
         template.voiceLines = [
@@ -1204,25 +1532,38 @@
           { sequence: "03", role: "旁白", content: "妖娆一睁眼，就看见一张比噩梦还可怕的脸。", emotion: "惊惧", duration: "3s", recorded: false },
           { sequence: "04", role: "疯子爹爹", content: "你是我的女儿！", emotion: "激动", duration: "2s", recorded: false },
           { sequence: "05", role: "疯子爹爹", content: "我的女儿怎么可能是恶魔！", emotion: "冰冷", duration: "3s", recorded: false },
-          { sequence: "06", role: "旁白", content: "不要煮了我！秒杀也比被煮成肉汤强！", emotion: "荒诞", duration: "3s", recorded: false },
-          { sequence: "07", role: "旁白", content: "热锅没有煮死她，反而把灵力烫了出来。", emotion: "震惊", duration: "3s", recorded: false },
-          { sequence: "08", role: "疯子爹爹", content: "是净化法则！", emotion: "清醒一瞬", duration: "2s", recorded: false },
-          { sequence: "09", role: "旁白", content: "十四年后，妖娆已经学会把疯爹的失忆，变成自己的外挂。", emotion: "腹黑", duration: "4s", recorded: false },
-          { sequence: "10", role: "妖娆", content: "大胆，在本王面前也敢称本尊？", emotion: "戏谑", duration: "3s", recorded: false },
-          { sequence: "11", role: "疯子爹爹", content: "这是魔王！大魔王！", emotion: "惊恐", duration: "2s", recorded: false },
-          { sequence: "12", role: "旁白", content: "这个疯子，早已经比有血缘关系的亲人更让妖娆无法割舍。", emotion: "温暖", duration: "4s", recorded: false }
+          { sequence: "06", role: "妖娆", content: "不要煮了我！秒杀也比被煮成肉汤强！", emotion: "荒诞", duration: "3s", recorded: false },
+          { sequence: "07", role: "疯子爹爹", content: "是净化法则！", emotion: "清醒一瞬", duration: "2s", recorded: false },
+          { sequence: "08", role: "妖娆", content: "大胆，在本王面前也敢称本尊？", emotion: "戏谑", duration: "3s", recorded: false },
+          { sequence: "09", role: "疯子爹爹", content: "这是魔王！大魔王！", emotion: "惊恐", duration: "2s", recorded: false },
+          { sequence: "10", role: "旁白", content: "她连疯子都敢骗，自然也敢抢猿王。", emotion: "轻狂", duration: "3s", recorded: false },
+          { sequence: "11", role: "疯子爹爹", content: "找到了，这就是娘亲！", emotion: "认真", duration: "2s", recorded: false },
+          { sequence: "12", role: "旁白", content: "抱着变强和查清黑珠的目标，妖娆站上了出云学院的选拔场。", emotion: "坚定", duration: "4s", recorded: false },
+          { sequence: "13", role: "妖娆", content: "五朵雪莲，换一人份灵基液。", emotion: "算计", duration: "3s", recorded: false },
+          { sequence: "14", role: "旁白", content: "学院不是安全区，属性一爆，所有人都可能翻脸。", emotion: "紧张", duration: "4s", recorded: false },
+          { sequence: "15", role: "旁白", content: "这次捡到的，不再是疯子，而是条被锁住的龙。", emotion: "神秘", duration: "4s", recorded: false },
+          { sequence: "16", role: "旁白", content: "第一卷的命运，从炎凰冲天的那一刻开始再也无法更改。", emotion: "高燃", duration: "4s", recorded: false }
         ].map((item, index) => Object.assign(createVoiceLine(index + 1), item));
+        collapseSeededItems(template.voiceLines, 6);
 
         template.audio.backgroundMusic = [
-          { scene: "第一章荒野开场", musicType: "压迫玄幻氛围", purpose: "建立危险荒野与诞生异象", ready: false, notes: "风声、兽吼、低频铺底" },
-          { scene: "第二章药锅净化", musicType: "神秘奇诡", purpose: "兼顾危险与修炼反转", ready: false, notes: "锅声与圣光音效需要层次" },
-          { scene: "第三章月下爆笑", musicType: "轻松狡黠", purpose: "转入成长型喜感调性", ready: false, notes: "让神王玩笑段更轻巧" }
+          { scene: "荒野认父", musicType: "压迫玄幻氛围", purpose: "建立危险荒野与诞生异象", ready: false, notes: "风声、兽吼、低频铺底" },
+          { scene: "药锅净化", musicType: "神秘奇诡", purpose: "兼顾危险与修炼反转", ready: false, notes: "锅声与圣光音效需要层次" },
+          { scene: "神王小强", musicType: "轻松狡黠", purpose: "把恐惧切成喜剧反差", ready: false, notes: "留出停顿给笑点" },
+          { scene: "学院试炼", musicType: "热血闯关", purpose: "提升测试与过关节奏", ready: false, notes: "节拍要明显" },
+          { scene: "属性追杀", musicType: "高压战斗", purpose: "承接光系神罚与逃亡", ready: false, notes: "鼓点加火焰音色" },
+          { scene: "炎凰通灵", musicType: "史诗收官", purpose: "做第一卷结尾燃点", ready: false, notes: "需要大开大合" }
         ].map((item) => Object.assign(createBgmRow(), item));
 
-        markChecklistDone(template.audio.effects, ["风声", "狼嚎", "魔法音效"]);
-        markChecklistDone(template.demoChecklist, ["原文章节", "1段剧情梗概", "分镜脚本", "台词/旁白"]);
+        markChecklistDone(template.audio.effects, ["风声", "狼嚎", "魔法音效", "脚步声", "火焰声", "转场音"]);
+        markChecklistDone(template.audio.narrationChecks, ["是否过长", "是否适合口播"]);
+        markChecklistDone(template.audio.voiceChecks, ["人物音色统一", "情绪自然"]);
+        markChecklistDone(template.editing.visuals, ["图片命名统一", "按镜头顺序导入", "每个镜头设置时长"]);
+        markChecklistDone(template.editing.subtitles, ["字幕内容完整", "无错别字"]);
+        markChecklistDone(template.quality.content, ["剧情是否连贯", "是否符合原著主线"]);
+        markChecklistDone(template.demoChecklist, ["原文章节", "1段剧情梗概", "角色设定图", "3-5张场景图", "分镜脚本", "台词/旁白", "背景音乐"]);
 
-        template.meta.sampleKey = "yaorao-first3";
+        template.meta.sampleKey = "yaorao-volume1";
         return template;
       }
 
@@ -1269,7 +1610,7 @@
           template.folders = [createFolder()];
           template.meta.initializedFromTemplate = false;
         } else {
-          buildYaoraoFirstThreeChaptersTemplate(template);
+          buildYaoraoVolumeOneTemplate(template);
         }
 
         return template;
@@ -1293,7 +1634,8 @@
       }
 
       function shouldForceSampleFromHash() {
-        return String(window.location.hash || "").toLowerCase() === SAMPLE_HASH;
+        const hash = String(window.location.hash || "").toLowerCase();
+        return hash === SAMPLE_HASH || hash === "#yaorao-first3";
       }
 
       function loadYaoraoSampleState(sourceLabel) {
@@ -1301,7 +1643,7 @@
         seeded.meta.lastSavedAt = new Date().toISOString();
         localStorage.setItem(STORAGE_KEY, JSON.stringify(seeded));
         saveStateLabel = "saved";
-        saveMessage = sourceLabel || "已载入《妖娆召唤师》前 3 章示例";
+        saveMessage = sourceLabel || "已载入《妖娆召唤师》第一卷示例";
         return seeded;
       }
 
@@ -1398,7 +1740,7 @@
       function loadInitialState() {
         try {
           if (shouldForceSampleFromHash()) {
-            return loadYaoraoSampleState("已按链接载入《妖娆召唤师》前 3 章示例");
+            return loadYaoraoSampleState("已按链接载入《妖娆召唤师》第一卷示例");
           }
           const raw = localStorage.getItem(STORAGE_KEY);
           if (!raw) {
@@ -1408,7 +1750,7 @@
           }
           const parsed = JSON.parse(raw);
           if (shouldUpgradeEmptyState(parsed)) {
-            return loadYaoraoSampleState("已升级为空白页的《妖娆召唤师》前 3 章示例");
+            return loadYaoraoSampleState("已升级为空白页的《妖娆召唤师》第一卷示例");
           }
           saveStateLabel = "saved";
           saveMessage = "已载入本地数据";
@@ -1595,21 +1937,51 @@
         }).join("") + "</div>" : '<div class="empty-state">这里还没有图片。上传角色设定图、场景参考图、分镜参考图后可以直接预览。</div>') + "</section>";
       }
 
+      function getQuickLabel(collectionPath, item, index) {
+        switch (collectionPath) {
+          case "episodes":
+            return item.chapterName || item.volumeName || ("单元 " + (index + 1));
+          case "characters":
+            return item.name || ("角色 " + (index + 1));
+          case "scenes":
+            return item.name || ("场景 " + (index + 1));
+          case "props":
+            return item.name || ("道具 " + (index + 1));
+          case "storyboards":
+            return item.shotNumber ? ("镜头 " + item.shotNumber) : ("镜头 " + (index + 1));
+          case "voiceLines":
+            return item.sequence ? ("台词 " + item.sequence) : ("台词 " + (index + 1));
+          case "audio.backgroundMusic":
+            return item.scene || ("音乐项 " + (index + 1));
+          default:
+            return "条目 " + (index + 1);
+        }
+      }
+
+      function renderQuickIndex(collectionPath, items) {
+        if (!items.length || items.length < 2) {
+          return "";
+        }
+        return '<div class="quick-index">' + items.map((item, index) => {
+          return '<button class="quick-chip" data-action="scroll-to-item" data-anchor="' + escapeHtml(collectionPath + "-" + index) + '">' + escapeHtml(getQuickLabel(collectionPath, item, index)) + "</button>";
+        }).join("") + "</div>";
+      }
+
       function renderRepeatableSection(config) {
         const items = getByPath(state, config.collectionPath) || [];
         const body = items.length ? items.map((item, index) => config.renderItem(item, index)).join("") : '<div class="empty-state">当前还没有条目，点击“新增条目”开始补充。</div>';
-        return '<section class="card"><div class="repeatable-head"><div><h2 class="section-title">' + escapeHtml(config.title) + '</h2><p class="section-subtitle">' + escapeHtml(config.subtitle) + '</p></div><button class="btn primary" data-action="add-item" data-collection="' + escapeHtml(config.collectionPath) + '">新增条目</button></div><div class="repeatable-list">' + body + '</div></section>';
+        return '<section class="card"><div class="repeatable-head"><div><h2 class="section-title">' + escapeHtml(config.title) + '</h2><p class="section-subtitle">' + escapeHtml(config.subtitle) + '</p><div class="pill-list"><span class="tag">共 ' + escapeHtml(String(items.length)) + ' 条</span><span class="tag">支持折叠与快速定位</span></div></div><button class="btn primary" data-action="add-item" data-collection="' + escapeHtml(config.collectionPath) + '">新增条目</button></div>' + renderQuickIndex(config.collectionPath, items) + '<div class="repeatable-list">' + body + '</div></section>';
       }
 
       function renderRepeatableCard(collectionPath, index, item, title, subtitle, innerHtml) {
-        return '<article class="repeatable-card' + (item.collapsed ? " collapsed" : "") + '"><div class="repeatable-summary"><div><h3>' + escapeHtml(title) + '</h3><p>' + escapeHtml(subtitle) + '</p></div><div class="repeatable-actions"><button class="btn" data-action="toggle-collapse" data-collection="' + escapeHtml(collectionPath) + '" data-index="' + escapeHtml(String(index)) + '">' + (item.collapsed ? "展开" : "收起") + '</button><button class="btn" data-action="duplicate-item" data-collection="' + escapeHtml(collectionPath) + '" data-index="' + escapeHtml(String(index)) + '">复制</button><button class="btn" data-action="delete-item" data-collection="' + escapeHtml(collectionPath) + '" data-index="' + escapeHtml(String(index)) + '">删除</button></div></div><div class="repeatable-body">' + innerHtml + "</div></article>";
+        return '<article id="' + escapeHtml(collectionPath + "-" + index) + '" class="repeatable-card' + (item.collapsed ? " collapsed" : "") + '"><div class="repeatable-summary"><div><h3>' + escapeHtml(title) + '</h3><p>' + escapeHtml(subtitle) + '</p></div><div class="repeatable-actions"><button class="btn" data-action="toggle-collapse" data-collection="' + escapeHtml(collectionPath) + '" data-index="' + escapeHtml(String(index)) + '">' + (item.collapsed ? "展开" : "收起") + '</button><button class="btn" data-action="duplicate-item" data-collection="' + escapeHtml(collectionPath) + '" data-index="' + escapeHtml(String(index)) + '">复制</button><button class="btn" data-action="delete-item" data-collection="' + escapeHtml(collectionPath) + '" data-index="' + escapeHtml(String(index)) + '">删除</button></div></div><div class="repeatable-body">' + innerHtml + "</div></article>";
       }
 
       function renderProjectInfoTab() {
         return '<section class="card"><h2 class="section-title">项目基础信息</h2><p class="section-subtitle">把项目最核心的定义先填在这里，后面的章节、角色、镜头和素材都会围绕这一层展开。</p><div class="form-grid">' +
-          renderField("项目名称", "projectInfo.projectName", state.projectInfo.projectName, { placeholder: "例如：妖娆召唤师 前3章策划" }) +
+          renderField("项目名称", "projectInfo.projectName", state.projectInfo.projectName, { placeholder: "例如：妖娆召唤师 第一卷策划" }) +
           renderField("小说名称", "projectInfo.novelName", state.projectInfo.novelName, { placeholder: "原著名称" }) +
-          renderField("改编章节范围", "projectInfo.chapterRange", state.projectInfo.chapterRange, { placeholder: "例如：第1-12章" }) +
+          renderField("改编章节范围", "projectInfo.chapterRange", state.projectInfo.chapterRange, { placeholder: "例如：第一卷001-040" }) +
           renderField("集数规划", "projectInfo.episodePlan", state.projectInfo.episodePlan, { placeholder: "例如：12集，前3集做开场世界观" }) +
           renderField("单集时长", "projectInfo.episodeDuration", state.projectInfo.episodeDuration, { placeholder: "例如：60-90秒" }) +
           renderField("视频比例", "projectInfo.ratio", state.projectInfo.ratio, { type: "select", items: ["横屏 16:9", "竖屏 9:16", "方屏 1:1", "其他"] }) +
@@ -1837,24 +2209,6 @@
           "</div></section>";
       }
 
-      function renderFoldersTab() {
-        return renderRepeatableSection({
-          title: "项目文件夹模板",
-          subtitle: "你可以在这里直接维护整个漫剧工程的文件夹结构说明，后面照着建目录就行。",
-          collectionPath: "folders",
-          renderItem: function (item, index) {
-            const title = item.name || ("文件夹 " + (index + 1));
-            const subtitle = item.note || "填写用途说明";
-            return renderRepeatableCard("folders", index, item, title, subtitle,
-              '<div class="form-grid">' +
-              renderField("文件夹名", "folders." + index + ".name", item.name, { placeholder: "例如：07_人物图片" }) +
-              renderField("用途说明", "folders." + index + ".note", item.note, { type: "textarea", full: true, placeholder: "说明这个目录存什么" }) +
-              "</div>"
-            );
-          }
-        });
-      }
-
       function renderDemoChecklistTab() {
         return '<section class="card"><h2 class="section-title">最简开工版</h2><p class="section-subtitle">如果你先想跑一个 Demo，可以只盯住下面这些关键件，尽快从“文案”进到“成片”。</p><div class="check-grid">' +
           renderChecklistGroup("Demo 必要项", "demoChecklist", state.demoChecklist) +
@@ -1875,7 +2229,6 @@
           case "audio": return renderAudioTab();
           case "editing": return renderEditingTab();
           case "quality": return renderQualityTab();
-          case "folders": return renderFoldersTab();
           case "demoChecklist": return renderDemoChecklistTab();
           default: return renderProjectInfoTab();
         }
@@ -1909,7 +2262,7 @@
 
       function renderApp() {
         document.title = APP_TITLE;
-        app.innerHTML = '<div class="page"><header class="hero"><div class="hero-top"><div class="hero-copy"><h1>' + APP_TITLE + '</h1><p>一个单文件、可离线使用的漫剧制作工作台。你可以在这里持续补充章节改编、角色设定、场景与分镜内容，也可以上传本地图片做素材预览，并把整个项目导出成 JSON 继续接力。</p></div><div class="toolbar"><button class="btn" data-action="load-yaorao-sample">载入前 3 章示例</button><button class="btn" data-action="new-blank">新建空白项目</button><button class="btn" data-action="reset-template">恢复默认模板</button><button class="btn" data-action="export-json">导出 JSON</button><button class="btn" data-action="import-json">导入 JSON</button><button class="btn primary" data-action="print-page">打印 / 导出 PDF</button><div id="save-status" class="status-pill" data-state="' + escapeHtml(saveStateLabel) + '"><span class="status-dot"></span><span class="status-text">' + escapeHtml(saveMessage) + '</span></div></div></div>' + renderOverview() + renderTabs() + '</header><main class="panel">' + renderActiveTab() + '</main><div class="footer-note">提示：图片会以浏览器本地数据形式保存。若上传很多大图，建议定期导出 JSON 备份。</div></div>';
+        app.innerHTML = '<div class="page"><header class="hero"><div class="hero-top"><div class="hero-copy"><h1>' + APP_TITLE + '</h1><p>一个单文件、可离线使用的漫剧制作工作台。你可以在这里持续补充章节改编、角色设定、场景与分镜内容，也可以上传本地图片做素材预览，并把整个项目导出成 JSON 继续接力。</p></div><div class="toolbar"><button class="btn" data-action="load-yaorao-sample">载入第一卷示例</button><button class="btn" data-action="new-blank">新建空白项目</button><button class="btn" data-action="reset-template">恢复默认模板</button><button class="btn" data-action="export-json">导出 JSON</button><button class="btn" data-action="import-json">导入 JSON</button><button class="btn primary" data-action="print-page">打印 / 导出 PDF</button><div id="save-status" class="status-pill" data-state="' + escapeHtml(saveStateLabel) + '"><span class="status-dot"></span><span class="status-text">' + escapeHtml(saveMessage) + '</span></div></div></div>' + renderOverview() + renderTabs() + '</header><main class="panel">' + renderActiveTab() + '</main><div class="footer-note">提示：图片会以浏览器本地数据形式保存。若上传很多大图，建议定期导出 JSON 备份。</div></div>';
         autoResizeTextareas();
       }
 
@@ -2060,10 +2413,10 @@
       }
 
       function loadYaoraoSampleByAction() {
-        if (!window.confirm("确定载入《妖娆召唤师》前 3 章示例吗？当前内容会被覆盖。")) {
+        if (!window.confirm("确定载入《妖娆召唤师》第一卷示例吗？当前内容会被覆盖。")) {
           return;
         }
-        state = loadYaoraoSampleState("已手动载入《妖娆召唤师》前 3 章示例");
+        state = loadYaoraoSampleState("已手动载入《妖娆召唤师》第一卷示例");
         renderApp();
       }
 
@@ -2092,6 +2445,13 @@
         }
         if (action === "toggle-collapse") {
           toggleCollapsed(target.dataset.collection, Number(target.dataset.index));
+          return;
+        }
+        if (action === "scroll-to-item") {
+          const el = document.getElementById(target.dataset.anchor);
+          if (el) {
+            el.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
           return;
         }
         if (action === "remove-image") {
