@@ -1,0 +1,1861 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>小说改编 AI 漫剧制作清单</title>
+  <style>
+    :root {
+      --bg: #f5efe7;
+      --bg-soft: #fbf8f2;
+      --card: rgba(255, 252, 247, 0.92);
+      --card-strong: #fffaf4;
+      --line: #d8c7af;
+      --line-strong: #bda47f;
+      --text: #3a2e24;
+      --muted: #7b6b5c;
+      --accent: #8b5e34;
+      --accent-soft: #efe0cb;
+      --accent-deep: #65411f;
+      --ok: #2c7a5d;
+      --warn: #af6e1d;
+      --danger: #b24937;
+      --shadow: 0 18px 48px rgba(84, 56, 27, 0.10);
+      --radius-xl: 24px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+      --radius-sm: 10px;
+      --font-sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+      --font-serif: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font-sans);
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(255, 243, 221, 0.95), transparent 35%),
+        radial-gradient(circle at top right, rgba(215, 191, 160, 0.35), transparent 28%),
+        linear-gradient(180deg, #f6f0e8 0%, #efe4d5 100%);
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+      color: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      border: 0;
+      border-radius: 999px;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+    }
+
+    .page {
+      width: min(1440px, calc(100vw - 28px));
+      margin: 18px auto 40px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 28px;
+      border: 1px solid rgba(189, 164, 127, 0.55);
+      border-radius: var(--radius-xl);
+      background:
+        linear-gradient(135deg, rgba(255, 249, 239, 0.95), rgba(245, 233, 217, 0.92)),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0));
+      box-shadow: var(--shadow);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -40px -70px auto;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(139, 94, 52, 0.16), transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: flex-start;
+      margin-bottom: 22px;
+    }
+
+    .hero-copy h1 {
+      margin: 0;
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 3vw, 3rem);
+      letter-spacing: 0.04em;
+      color: var(--accent-deep);
+    }
+
+    .hero-copy p {
+      margin: 10px 0 0;
+      max-width: 760px;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+      min-width: 320px;
+    }
+
+    .btn {
+      padding: 11px 16px;
+      background: #fff8ef;
+      color: var(--accent-deep);
+      border: 1px solid rgba(139, 94, 52, 0.16);
+      box-shadow: 0 8px 18px rgba(137, 92, 49, 0.08);
+    }
+
+    .btn:hover {
+      box-shadow: 0 12px 24px rgba(137, 92, 49, 0.12);
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, #8b5e34, #6f4927);
+      color: #fffaf5;
+      box-shadow: 0 12px 28px rgba(111, 73, 39, 0.25);
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 253, 249, 0.88);
+      border: 1px solid rgba(189, 164, 127, 0.5);
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--warn);
+      box-shadow: 0 0 0 5px rgba(175, 110, 29, 0.12);
+    }
+
+    .status-pill[data-state="saved"] .status-dot {
+      background: var(--ok);
+      box-shadow: 0 0 0 5px rgba(44, 122, 93, 0.12);
+    }
+
+    .status-pill[data-state="error"] .status-dot {
+      background: var(--danger);
+      box-shadow: 0 0 0 5px rgba(178, 73, 55, 0.12);
+    }
+
+    .overview {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .metric {
+      padding: 16px 18px;
+      border-radius: var(--radius-lg);
+      background: rgba(255, 250, 243, 0.82);
+      border: 1px solid rgba(189, 164, 127, 0.38);
+    }
+
+    .metric-label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .metric-value {
+      font-size: clamp(1.05rem, 2vw, 1.55rem);
+      font-weight: 700;
+      color: var(--accent-deep);
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      margin-bottom: 22px;
+    }
+
+    .tab {
+      flex: 0 0 auto;
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: rgba(255, 248, 238, 0.78);
+      color: var(--muted);
+      border: 1px solid rgba(189, 164, 127, 0.32);
+    }
+
+    .tab.active {
+      background: linear-gradient(135deg, #7c532c, #9b6a3d);
+      color: #fffaf4;
+      box-shadow: 0 12px 24px rgba(109, 71, 37, 0.22);
+    }
+
+    .panel {
+      display: grid;
+      gap: 18px;
+    }
+
+    .card,
+    .repeatable-card {
+      border: 1px solid rgba(189, 164, 127, 0.4);
+      border-radius: var(--radius-xl);
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+
+    .card {
+      padding: 22px;
+    }
+
+    .section-title {
+      margin: 0 0 6px;
+      font-size: 1.2rem;
+      font-family: var(--font-serif);
+      color: var(--accent-deep);
+    }
+
+    .section-subtitle {
+      margin: 0 0 18px;
+      line-height: 1.65;
+      color: var(--muted);
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .form-grid.one {
+      grid-template-columns: 1fr;
+    }
+
+    .form-grid.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+      align-content: start;
+    }
+
+    .field.full-span {
+      grid-column: 1 / -1;
+    }
+
+    .field > span,
+    .field-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--accent-deep);
+    }
+
+    .field input[type="text"],
+    .field input[type="number"],
+    .field textarea,
+    .field select {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(189, 164, 127, 0.6);
+      background: var(--card-strong);
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus {
+      border-color: rgba(139, 94, 52, 0.82);
+      box-shadow: 0 0 0 4px rgba(139, 94, 52, 0.12);
+    }
+
+    .field textarea {
+      min-height: 110px;
+      resize: vertical;
+      line-height: 1.65;
+    }
+
+    .hint {
+      margin-top: 10px;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .repeatable-list {
+      display: grid;
+      gap: 16px;
+    }
+
+    .repeatable-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .repeatable-head .btn {
+      flex: 0 0 auto;
+    }
+
+    .repeatable-card {
+      overflow: hidden;
+    }
+
+    .repeatable-summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 22px;
+      background: linear-gradient(180deg, rgba(255, 248, 238, 0.92), rgba(255, 248, 238, 0.72));
+      border-bottom: 1px solid rgba(189, 164, 127, 0.34);
+    }
+
+    .repeatable-summary h3 {
+      margin: 0;
+      font-size: 1rem;
+      color: var(--accent-deep);
+    }
+
+    .repeatable-summary p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .repeatable-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .repeatable-actions .btn {
+      padding: 9px 12px;
+      font-size: 0.92rem;
+    }
+
+    .repeatable-body {
+      padding: 22px;
+      display: grid;
+      gap: 20px;
+    }
+
+    .repeatable-card.collapsed .repeatable-body {
+      display: none;
+    }
+
+    .check-grid {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .check-group {
+      padding: 16px;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(189, 164, 127, 0.34);
+      background: rgba(255, 252, 247, 0.82);
+    }
+
+    .check-group h4 {
+      margin: 0 0 12px;
+      font-size: 1rem;
+      color: var(--accent-deep);
+    }
+
+    .check-item,
+    .toggle-row {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      margin: 10px 0;
+    }
+
+    .check-item input,
+    .toggle-row input {
+      accent-color: var(--accent);
+      margin-top: 4px;
+    }
+
+    .check-item span,
+    .toggle-row span {
+      line-height: 1.55;
+    }
+
+    .image-panel {
+      display: grid;
+      gap: 12px;
+    }
+
+    .image-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .upload-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 11px 16px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent-deep);
+      border: 1px solid rgba(139, 94, 52, 0.16);
+      cursor: pointer;
+    }
+
+    .image-grid {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+
+    .image-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(189, 164, 127, 0.42);
+      background: rgba(255, 255, 255, 0.85);
+      min-height: 180px;
+    }
+
+    .image-card img {
+      display: block;
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      background: #f1e5d6;
+    }
+
+    .image-card footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+    }
+
+    .image-card strong {
+      display: block;
+      font-size: 0.88rem;
+      color: var(--accent-deep);
+      word-break: break-all;
+    }
+
+    .image-card button {
+      padding: 8px 10px;
+      background: rgba(178, 73, 55, 0.12);
+      color: var(--danger);
+      border: 1px solid rgba(178, 73, 55, 0.15);
+    }
+
+    .empty-state {
+      padding: 18px;
+      border: 1px dashed rgba(189, 164, 127, 0.7);
+      border-radius: var(--radius-lg);
+      background: rgba(255, 250, 243, 0.62);
+      color: var(--muted);
+    }
+
+    .notice {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: var(--radius-lg);
+      background: rgba(239, 224, 203, 0.65);
+      color: var(--accent-deep);
+      line-height: 1.65;
+      border: 1px solid rgba(189, 164, 127, 0.32);
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .mini-table {
+      display: grid;
+      gap: 12px;
+    }
+
+    .mini-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr)) 120px 120px;
+      gap: 10px;
+      align-items: end;
+      padding: 14px;
+      border-radius: var(--radius-lg);
+      background: rgba(255, 252, 247, 0.88);
+      border: 1px solid rgba(189, 164, 127, 0.34);
+    }
+
+    .mini-row.five {
+      grid-template-columns: repeat(5, minmax(0, 1fr)) 120px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(139, 94, 52, 0.12);
+      color: var(--accent-deep);
+      font-size: 0.82rem;
+    }
+
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 1024px) {
+      .hero-top {
+        flex-direction: column;
+      }
+
+      .toolbar {
+        justify-content: flex-start;
+        min-width: 0;
+      }
+
+      .form-grid,
+      .form-grid.three,
+      .mini-row,
+      .mini-row.five {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .page {
+        width: min(100vw - 18px, 100%);
+        margin: 10px auto 24px;
+      }
+
+      .hero,
+      .card,
+      .repeatable-body {
+        padding: 18px;
+      }
+
+      .repeatable-summary {
+        padding: 16px 18px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .repeatable-actions {
+        width: 100%;
+        justify-content: flex-start;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .page {
+        width: 100%;
+        margin: 0;
+      }
+
+      .hero,
+      .card,
+      .repeatable-card {
+        box-shadow: none;
+        border-color: #ddd;
+        background: #fff;
+      }
+
+      .toolbar,
+      .tabs,
+      .status-pill,
+      .repeatable-actions,
+      .upload-label,
+      .image-card button,
+      .footer-note {
+        display: none !important;
+      }
+
+      .repeatable-body {
+        display: grid !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <input id="import-input" type="file" accept="application/json" hidden>
+  <script>
+    (function () {
+      const STORAGE_KEY = "novel-manga-checklist-state-v1";
+      const APP_VERSION = 1;
+      const APP_TITLE = "小说改编 AI 漫剧制作清单";
+      const app = document.getElementById("app");
+      const importInput = document.getElementById("import-input");
+
+      const tabs = [
+        { id: "projectInfo", label: "项目基础信息" },
+        { id: "workflow", label: "制作流程" },
+        { id: "episodes", label: "章节改编" },
+        { id: "characters", label: "角色设定" },
+        { id: "scenes", label: "场景设定" },
+        { id: "props", label: "道具特效" },
+        { id: "storyboards", label: "分镜脚本" },
+        { id: "prompts", label: "Prompt 模板" },
+        { id: "voiceLines", label: "配音台词" },
+        { id: "audio", label: "音乐音效" },
+        { id: "editing", label: "剪辑执行" },
+        { id: "quality", label: "质量检查" },
+        { id: "folders", label: "文件夹模板" },
+        { id: "demoChecklist", label: "Demo 开工版" }
+      ];
+
+      const collectionFactories = {
+        "episodes": () => createEpisode(),
+        "characters": () => createCharacter(),
+        "scenes": () => createScene(),
+        "props": () => createProp(),
+        "storyboards": (arr) => createStoryboard(arr.length + 1),
+        "voiceLines": (arr) => createVoiceLine(arr.length + 1),
+        "audio.backgroundMusic": () => createBgmRow(),
+        "folders": () => createFolder()
+      };
+
+      let activeTab = "projectInfo";
+      let state = loadInitialState();
+      let saveTimer = null;
+      let saveStateLabel = "saved";
+      let saveMessage = "已载入本地数据";
+
+      function uid(prefix) {
+        return prefix + "-" + Math.random().toString(36).slice(2, 10) + "-" + Date.now().toString(36);
+      }
+
+      function deepClone(value) {
+        return JSON.parse(JSON.stringify(value));
+      }
+
+      function createChecklist(labels) {
+        return labels.map((label) => ({ id: uid("chk"), label, done: false }));
+      }
+
+      function createProjectInfo() {
+        return {
+          projectName: "",
+          novelName: "",
+          chapterRange: "",
+          episodePlan: "",
+          episodeDuration: "",
+          ratio: "竖屏 9:16",
+          targetPlatforms: "抖音 / B站 / 小红书 / 视频号",
+          style: "",
+          audience: "",
+          updateFrequency: ""
+        };
+      }
+
+      function createEpisode() {
+        return {
+          id: uid("episode"),
+          collapsed: false,
+          volumeName: "",
+          chapterName: "",
+          sourceRange: "",
+          targetDuration: "",
+          logline: "",
+          highlights: "",
+          openingEmotion: "",
+          middleEmotion: "",
+          climaxEmotion: "",
+          endingEmotion: "",
+          notes: ""
+        };
+      }
+
+      function createCharacter() {
+        return {
+          id: uid("character"),
+          collapsed: false,
+          name: "",
+          identity: "",
+          ageAppearance: "",
+          keywords: "",
+          positioning: "主角",
+          appearance: "",
+          outfit: "",
+          color: "",
+          expressions: "",
+          actions: "",
+          voiceType: "少女音",
+          prompt: "",
+          prepItems: createChecklist([
+            "正面图",
+            "侧面图",
+            "背面图",
+            "微笑表情",
+            "生气表情",
+            "惊讶表情",
+            "悲伤表情",
+            "战斗/施法姿势",
+            "抱人/回头/奔跑动作"
+          ]),
+          images: []
+        };
+      }
+
+      function createScene() {
+        return {
+          id: uid("scene"),
+          collapsed: false,
+          name: "",
+          purpose: "开场",
+          description: "",
+          time: "白天",
+          mood: "温馨",
+          visualStyle: "",
+          colorKeywords: "",
+          prompt: "",
+          prepItems: createChecklist([
+            "主场景全景",
+            "主场景中景",
+            "主场景近景",
+            "白天版本",
+            "夜晚版本",
+            "特效版本（下雨/起雾/光束/火焰）"
+          ]),
+          images: []
+        };
+      }
+
+      function createProp() {
+        return {
+          id: uid("prop"),
+          collapsed: false,
+          name: "",
+          owner: "",
+          useCase: "",
+          appearance: "",
+          material: "",
+          effect: "",
+          prompt: "",
+          images: []
+        };
+      }
+
+      function createStoryboard(index) {
+        return {
+          id: uid("shot"),
+          collapsed: false,
+          shotNumber: String(index).padStart(2, "0"),
+          timing: "",
+          shotSize: "",
+          visual: "",
+          action: "",
+          dialogue: "",
+          audio: "",
+          note: "",
+          images: []
+        };
+      }
+
+      function createVoiceLine(index) {
+        return {
+          id: uid("voice"),
+          collapsed: false,
+          sequence: String(index).padStart(2, "0"),
+          role: "",
+          content: "",
+          emotion: "",
+          duration: "",
+          recorded: false
+        };
+      }
+
+      function createBgmRow() {
+        return {
+          id: uid("bgm"),
+          scene: "",
+          musicType: "",
+          purpose: "",
+          ready: false,
+          notes: ""
+        };
+      }
+
+      function createFolder() {
+        return {
+          id: uid("folder"),
+          name: "",
+          note: ""
+        };
+      }
+
+      function createPromptBlocks() {
+        return {
+          character: {
+            name: "",
+            prompt: "A beautiful ancient Chinese fantasy character, anime style, elegant face, expressive eyes, cinematic lighting, full body character sheet, front side back view, high detail",
+            negative: "low quality, blurry, ugly face, extra fingers, bad anatomy, inconsistent costume, duplicate limbs"
+          },
+          scene: {
+            name: "",
+            prompt: "Ancient Chinese fantasy environment, soft anime style, cinematic composition, atmospheric light, layered depth, beautiful and immersive world building, high detail",
+            negative: "horror, ugly, dark gore, low quality, blurry, messy composition"
+          },
+          shot: {
+            name: "",
+            prompt: "Close-up shot of the main character, warm anime style, cinematic composition, consistent character design, soft light, ancient Chinese fantasy aesthetic",
+            negative: ""
+          }
+        };
+      }
+
+      function createWorkflowTemplate() {
+        return {
+          planning: createChecklist([
+            "确定改编章节",
+            "确定单集时长",
+            "确定改编方式（旁白型 / 对话型 / 高燃剪辑型）",
+            "确定整体画风",
+            "确定角色视觉统一方案",
+            "确定制作工具（Gemini / 剪映 / Runway / 其他）"
+          ]),
+          adaptation: createChecklist([
+            "提炼章节梗概",
+            "拆分关键剧情点",
+            "删减不适合视频化的文字",
+            "补充适合视觉表达的动作/镜头",
+            "生成分镜脚本",
+            "整理旁白和台词"
+          ]),
+          visuals: createChecklist([
+            "生成人物三视图",
+            "生成人物表情图",
+            "生成关键动作图",
+            "生成场景图",
+            "生成道具/灵兽/特效图",
+            "统一角色脸部和服装细节"
+          ]),
+          audio: createChecklist([
+            "整理角色台词",
+            "整理旁白文案",
+            "录制或生成 AI 配音",
+            "准备背景音乐",
+            "准备音效",
+            "调整音量和节奏"
+          ]),
+          video: createChecklist([
+            "按分镜排序素材",
+            "设置镜头时长",
+            "添加推拉摇移等动态效果",
+            "添加字幕",
+            "添加转场",
+            "添加 BGM 和音效",
+            "导出初版",
+            "检查节奏和错别字",
+            "导出成片"
+          ])
+        };
+      }
+
+      function createAudioTemplate() {
+        return {
+          backgroundMusic: [
+            { id: uid("bgm"), scene: "开场", musicType: "神秘古风", purpose: "建立氛围", ready: false, notes: "" },
+            { id: uid("bgm"), scene: "高潮", musicType: "激烈史诗", purpose: "冲突爆发", ready: false, notes: "" },
+            { id: uid("bgm"), scene: "结尾", musicType: "温馨治愈", purpose: "收尾", ready: false, notes: "" }
+          ],
+          effects: createChecklist(["风声", "雨声", "狼嚎", "脚步声", "火焰声", "魔法音效", "转场音", "拥抱/衣料摩擦声"]),
+          narrationChecks: createChecklist(["是否过长", "是否适合口播", "是否有重复信息", "是否和画面对得上"]),
+          voiceChecks: createChecklist(["人物音色统一", "情绪自然", "发音清楚", "音量稳定", "无明显杂音"])
+        };
+      }
+
+      function createEditingTemplate() {
+        return {
+          visuals: createChecklist(["图片命名统一", "按镜头顺序导入", "每个镜头设置时长", "添加推拉镜头", "添加轻微动态效果", "添加转场特效"]),
+          subtitles: createChecklist(["字幕内容完整", "无错别字", "字号适中", "字体符合古风调性", "位置不挡脸"]),
+          audio: createChecklist(["配音与画面对齐", "BGM 不压人声", "音效卡点准确", "开头结尾有留白"]),
+          exportSettings: createChecklist(["分辨率 1080P / 2K", "帧率 24fps / 30fps", "码率合适", "文件命名规范"])
+        };
+      }
+
+      function createQualityTemplate() {
+        return {
+          content: createChecklist(["剧情是否连贯", "是否符合原著主线", "人设是否统一", "情绪表达是否准确"]),
+          visual: createChecklist(["角色长相是否统一", "服装是否统一", "场景是否统一", "光影是否一致"]),
+          audio: createChecklist(["有无爆音", "有无空白段", "台词是否清楚", "配乐是否抢戏"]),
+          release: createChecklist(["封面已准备", "标题已拟定", "简介已拟定", "标签已拟定"])
+        };
+      }
+
+      function createFolderTemplate() {
+        return [
+          { id: uid("folder"), name: "01_原文", note: "保存原文章节与节选" },
+          { id: uid("folder"), name: "02_剧情梗概", note: "按集整理梗概和看点" },
+          { id: uid("folder"), name: "03_角色设定", note: "角色档案与人设图" },
+          { id: uid("folder"), name: "04_场景设定", note: "场景图与氛围描述" },
+          { id: uid("folder"), name: "05_分镜脚本", note: "镜头脚本与节奏表" },
+          { id: uid("folder"), name: "06_Prompt提示词", note: "人物 / 场景 / 镜头提示词" },
+          { id: uid("folder"), name: "07_人物图片", note: "角色三视图和动作图" },
+          { id: uid("folder"), name: "08_场景图片", note: "环境和特效图" },
+          { id: uid("folder"), name: "09_配音", note: "角色台词与旁白音频" },
+          { id: uid("folder"), name: "10_BGM音效", note: "背景音乐和音效素材" },
+          { id: uid("folder"), name: "11_剪映工程", note: "剪映工程文件" },
+          { id: uid("folder"), name: "12_导出成片", note: "试片与终版" },
+          { id: uid("folder"), name: "13_封面文案", note: "封面、标题与简介" }
+        ];
+      }
+
+      function createDemoChecklist() {
+        return createChecklist(["原文章节", "1段剧情梗概", "角色设定图", "3-5张场景图", "分镜脚本", "台词/旁白", "AI 配音", "背景音乐", "剪映合成"]);
+      }
+
+      function createDefaultState(mode) {
+        const template = {
+          projectInfo: createProjectInfo(),
+          workflow: createWorkflowTemplate(),
+          episodes: [createEpisode()],
+          characters: [createCharacter()],
+          scenes: [createScene()],
+          props: [createProp()],
+          storyboards: [1, 2, 3, 4, 5].map((index) => createStoryboard(index)),
+          prompts: createPromptBlocks(),
+          voiceLines: [createVoiceLine(1), createVoiceLine(2)],
+          audio: createAudioTemplate(),
+          editing: createEditingTemplate(),
+          quality: createQualityTemplate(),
+          folders: createFolderTemplate(),
+          demoChecklist: createDemoChecklist(),
+          meta: {
+            version: APP_VERSION,
+            lastSavedAt: "",
+            initializedFromTemplate: true
+          }
+        };
+
+        if (mode === "blank") {
+          template.projectInfo.targetPlatforms = "";
+          template.projectInfo.ratio = "";
+          template.projectInfo.style = "";
+          template.projectInfo.targetPlatforms = "";
+          template.prompts.character.prompt = "";
+          template.prompts.character.negative = "";
+          template.prompts.scene.prompt = "";
+          template.prompts.scene.negative = "";
+          template.prompts.shot.prompt = "";
+          template.episodes = [createEpisode()];
+          template.characters = [createCharacter()];
+          template.scenes = [createScene()];
+          template.props = [createProp()];
+          template.storyboards = [createStoryboard(1)];
+          template.voiceLines = [createVoiceLine(1)];
+          template.audio.backgroundMusic = [createBgmRow()];
+          template.folders = [createFolder()];
+          template.meta.initializedFromTemplate = false;
+        } else {
+          template.projectInfo.targetPlatforms = "抖音 / B站 / 小红书 / 视频号 / 其他";
+          template.projectInfo.style = "古风温馨 / 华丽仙侠 / 热血玄幻 / 治愈动画 / 其他";
+          template.episodes[0].logline = "本集一句话梗概写在这里，例如：女主重生于兽潮荒野，在异象与父爱中开启命运。";
+          template.episodes[0].highlights = "看点1：\n看点2：\n看点3：";
+          template.voiceLines[0].role = "旁白";
+          template.voiceLines[0].content = "这里填写旁白或台词内容。";
+          template.voiceLines[0].emotion = "紧张";
+          template.voiceLines[0].duration = "4s";
+          template.voiceLines[1].role = "角色";
+          template.voiceLines[1].content = "这里填写角色对话。";
+          template.voiceLines[1].emotion = "激动";
+          template.voiceLines[1].duration = "2s";
+        }
+
+        return template;
+      }
+
+      function normalizeChecklistArray(list, fallback) {
+        if (!Array.isArray(list) || list.length === 0) {
+          return deepClone(fallback);
+        }
+        return list.map((item, index) => ({
+          id: item && item.id ? String(item.id) : uid("chk"),
+          label: item && item.label ? String(item.label) : (fallback[index] ? fallback[index].label : "待办项"),
+          done: !!(item && item.done)
+        }));
+      }
+
+      function normalizeImages(images) {
+        if (!Array.isArray(images)) {
+          return [];
+        }
+        return images
+          .filter((item) => item && typeof item.dataUrl === "string" && item.dataUrl.startsWith("data:image"))
+          .map((item) => ({
+            id: item.id ? String(item.id) : uid("img"),
+            name: item.name ? String(item.name) : "未命名图片",
+            dataUrl: item.dataUrl
+          }));
+      }
+
+      function normalizeRepeatable(list, fallback, factory) {
+        if (!Array.isArray(list) || list.length === 0) {
+          return deepClone(fallback);
+        }
+        return list.map((item, index) => {
+          const base = factory(index + 1);
+          const merged = Object.assign({}, base, item || {});
+          if (base.prepItems) {
+            merged.prepItems = normalizeChecklistArray(item && item.prepItems, base.prepItems);
+          }
+          if (base.images || item && item.images) {
+            merged.images = normalizeImages(item && item.images);
+          }
+          merged.id = item && item.id ? String(item.id) : base.id;
+          merged.collapsed = !!(item && item.collapsed);
+          return merged;
+        });
+      }
+
+      function normalizeGroupedChecklist(groups, fallback) {
+        const next = {};
+        Object.keys(fallback).forEach((key) => {
+          if (Array.isArray(fallback[key])) {
+            next[key] = normalizeChecklistArray(groups && groups[key], fallback[key]);
+          } else {
+            next[key] = fallback[key];
+          }
+        });
+        return next;
+      }
+
+      function normalizePrompts(prompts, fallback) {
+        const next = {};
+        Object.keys(fallback).forEach((key) => {
+          next[key] = Object.assign({}, fallback[key], prompts && prompts[key] ? prompts[key] : {});
+        });
+        return next;
+      }
+
+      function normalizeState(input) {
+        const fallback = createDefaultState("template");
+        const candidate = input && typeof input === "object" ? input : {};
+        return {
+          projectInfo: Object.assign({}, fallback.projectInfo, candidate.projectInfo || {}),
+          workflow: normalizeGroupedChecklist(candidate.workflow, fallback.workflow),
+          episodes: normalizeRepeatable(candidate.episodes, fallback.episodes, createEpisode),
+          characters: normalizeRepeatable(candidate.characters, fallback.characters, createCharacter),
+          scenes: normalizeRepeatable(candidate.scenes, fallback.scenes, createScene),
+          props: normalizeRepeatable(candidate.props, fallback.props, createProp),
+          storyboards: normalizeRepeatable(candidate.storyboards, fallback.storyboards, createStoryboard),
+          prompts: normalizePrompts(candidate.prompts, fallback.prompts),
+          voiceLines: normalizeRepeatable(candidate.voiceLines, fallback.voiceLines, createVoiceLine),
+          audio: {
+            backgroundMusic: normalizeRepeatable(candidate.audio && candidate.audio.backgroundMusic, fallback.audio.backgroundMusic, createBgmRow),
+            effects: normalizeChecklistArray(candidate.audio && candidate.audio.effects, fallback.audio.effects),
+            narrationChecks: normalizeChecklistArray(candidate.audio && candidate.audio.narrationChecks, fallback.audio.narrationChecks),
+            voiceChecks: normalizeChecklistArray(candidate.audio && candidate.audio.voiceChecks, fallback.audio.voiceChecks)
+          },
+          editing: normalizeGroupedChecklist(candidate.editing, fallback.editing),
+          quality: normalizeGroupedChecklist(candidate.quality, fallback.quality),
+          folders: normalizeRepeatable(candidate.folders, fallback.folders, createFolder),
+          demoChecklist: normalizeChecklistArray(candidate.demoChecklist, fallback.demoChecklist),
+          meta: Object.assign({}, fallback.meta, candidate.meta || {}, { version: APP_VERSION })
+        };
+      }
+
+      function loadInitialState() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) {
+            saveStateLabel = "saved";
+            saveMessage = "已载入默认模板";
+            return createDefaultState("template");
+          }
+          saveStateLabel = "saved";
+          saveMessage = "已载入本地数据";
+          return normalizeState(JSON.parse(raw));
+        } catch (error) {
+          console.warn("加载本地数据失败", error);
+          saveStateLabel = "error";
+          saveMessage = "本地数据损坏，已回退到默认模板";
+          return createDefaultState("template");
+        }
+      }
+
+      function saveState() {
+        state.meta.lastSavedAt = new Date().toISOString();
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        saveStateLabel = "saved";
+        saveMessage = "已自动保存 " + formatTimestamp(state.meta.lastSavedAt);
+        updateSaveIndicator();
+      }
+
+      function markDirty() {
+        saveStateLabel = "pending";
+        saveMessage = "正在保存变更...";
+        updateSaveIndicator();
+      }
+
+      function queueSave() {
+        markDirty();
+        if (saveTimer) {
+          clearTimeout(saveTimer);
+        }
+        saveTimer = setTimeout(function () {
+          try {
+            saveState();
+          } catch (error) {
+            console.warn("保存失败", error);
+            saveStateLabel = "error";
+            saveMessage = "保存失败，请导出 JSON 备份后减少图片体积";
+            updateSaveIndicator();
+          }
+        }, 320);
+      }
+
+      function formatTimestamp(value) {
+        if (!value) {
+          return "--";
+        }
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) {
+          return value;
+        }
+        return date.toLocaleString("zh-CN", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit"
+        });
+      }
+
+      function escapeHtml(value) {
+        return String(value || "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function getByPath(object, path) {
+        return path.split(".").reduce((acc, key) => {
+          if (acc == null) {
+            return undefined;
+          }
+          return acc[key];
+        }, object);
+      }
+
+      function setByPath(object, path, value) {
+        const keys = path.split(".");
+        let target = object;
+        for (let index = 0; index < keys.length - 1; index += 1) {
+          target = target[keys[index]];
+        }
+        target[keys[keys.length - 1]] = value;
+      }
+
+      function countBooleans(value) {
+        if (typeof value === "boolean") {
+          return { total: 1, done: value ? 1 : 0 };
+        }
+        if (!value || typeof value !== "object") {
+          return { total: 0, done: 0 };
+        }
+        if (Array.isArray(value)) {
+          return value.reduce((acc, item) => {
+            const result = countBooleans(item);
+            acc.total += result.total;
+            acc.done += result.done;
+            return acc;
+          }, { total: 0, done: 0 });
+        }
+        return Object.keys(value).reduce((acc, key) => {
+          const result = countBooleans(value[key]);
+          acc.total += result.total;
+          acc.done += result.done;
+          return acc;
+        }, { total: 0, done: 0 });
+      }
+
+      function getProgressStats() {
+        const groups = [
+          state.workflow,
+          state.audio.effects,
+          state.audio.narrationChecks,
+          state.audio.voiceChecks,
+          state.editing,
+          state.quality,
+          state.demoChecklist,
+          state.characters.map((item) => item.prepItems),
+          state.scenes.map((item) => item.prepItems),
+          state.audio.backgroundMusic.map((item) => item.ready),
+          state.voiceLines.map((item) => item.recorded)
+        ];
+        const summary = groups.reduce((acc, item) => {
+          const result = countBooleans(item);
+          acc.total += result.total;
+          acc.done += result.done;
+          return acc;
+        }, { total: 0, done: 0 });
+        const percentage = summary.total ? Math.round(summary.done / summary.total * 100) : 0;
+        return {
+          total: summary.total,
+          done: summary.done,
+          pending: Math.max(summary.total - summary.done, 0),
+          percentage: percentage
+        };
+      }
+
+      function updateSaveIndicator() {
+        const node = document.getElementById("save-status");
+        if (!node) {
+          return;
+        }
+        node.dataset.state = saveStateLabel === "pending" ? "pending" : saveStateLabel;
+        node.querySelector(".status-text").textContent = saveMessage;
+      }
+
+      function autoResizeTextareas() {
+        document.querySelectorAll("textarea[data-path]").forEach((textarea) => {
+          textarea.style.height = "auto";
+          textarea.style.height = Math.max(textarea.scrollHeight, 110) + "px";
+        });
+      }
+
+      function renderField(label, path, value, options) {
+        const opts = options || {};
+        const placeholder = opts.placeholder ? ' placeholder="' + escapeHtml(opts.placeholder) + '"' : "";
+        const className = opts.full ? "field full-span" : "field";
+        if (opts.type === "textarea") {
+          return '<label class="' + className + '"><span>' + escapeHtml(label) + '</span><textarea data-path="' + escapeHtml(path) + '"' + placeholder + '>' + escapeHtml(value) + '</textarea></label>';
+        }
+        if (opts.type === "select") {
+          const optionMarkup = (opts.items || []).map((item) => {
+            const option = typeof item === "string" ? { value: item, label: item } : item;
+            const selected = option.value === value ? " selected" : "";
+            return '<option value="' + escapeHtml(option.value) + '"' + selected + '>' + escapeHtml(option.label) + "</option>";
+          }).join("");
+          return '<label class="' + className + '"><span>' + escapeHtml(label) + '</span><select data-path="' + escapeHtml(path) + '">' + optionMarkup + "</select></label>";
+        }
+        return '<label class="' + className + '"><span>' + escapeHtml(label) + '</span><input type="text" data-path="' + escapeHtml(path) + '" value="' + escapeHtml(value) + '"' + placeholder + "></label>";
+      }
+
+      function renderChecklistGroup(title, path, items) {
+        return '<div class="check-group"><h4>' + escapeHtml(title) + '</h4>' + items.map((item, index) => {
+          const itemPath = path + "." + index + ".done";
+          return '<label class="check-item"><input type="checkbox" data-path="' + escapeHtml(itemPath) + '"' + (item.done ? " checked" : "") + '><span>' + escapeHtml(item.label) + "</span></label>";
+        }).join("") + "</div>";
+      }
+
+      function renderImagePanel(collectionPath, itemIndex, images) {
+        return '<section class="image-panel"><div class="field-title">图片上传与预览</div><div class="image-toolbar"><label class="upload-label">上传本地图片<input type="file" accept="image/*" multiple hidden data-upload-path="' + escapeHtml(collectionPath) + '" data-item-index="' + escapeHtml(String(itemIndex)) + '"></label><span class="tag">支持多图上传，本地预览后会随浏览器自动保存</span></div>' + (images.length ? '<div class="image-grid">' + images.map((image, imageIndex) => {
+          return '<article class="image-card"><img src="' + image.dataUrl + '" alt="' + escapeHtml(image.name) + '"><footer><div><strong>' + escapeHtml(image.name) + '</strong></div><button type="button" data-action="remove-image" data-collection="' + escapeHtml(collectionPath) + '" data-index="' + escapeHtml(String(itemIndex)) + '" data-image-index="' + escapeHtml(String(imageIndex)) + '">删除</button></footer></article>';
+        }).join("") + "</div>" : '<div class="empty-state">这里还没有图片。上传角色设定图、场景参考图、分镜参考图后可以直接预览。</div>') + "</section>";
+      }
+
+      function renderRepeatableSection(config) {
+        const items = getByPath(state, config.collectionPath) || [];
+        const body = items.length ? items.map((item, index) => config.renderItem(item, index)).join("") : '<div class="empty-state">当前还没有条目，点击“新增条目”开始补充。</div>';
+        return '<section class="card"><div class="repeatable-head"><div><h2 class="section-title">' + escapeHtml(config.title) + '</h2><p class="section-subtitle">' + escapeHtml(config.subtitle) + '</p></div><button class="btn primary" data-action="add-item" data-collection="' + escapeHtml(config.collectionPath) + '">新增条目</button></div><div class="repeatable-list">' + body + '</div></section>';
+      }
+
+      function renderRepeatableCard(collectionPath, index, item, title, subtitle, innerHtml) {
+        return '<article class="repeatable-card' + (item.collapsed ? " collapsed" : "") + '"><div class="repeatable-summary"><div><h3>' + escapeHtml(title) + '</h3><p>' + escapeHtml(subtitle) + '</p></div><div class="repeatable-actions"><button class="btn" data-action="toggle-collapse" data-collection="' + escapeHtml(collectionPath) + '" data-index="' + escapeHtml(String(index)) + '">' + (item.collapsed ? "展开" : "收起") + '</button><button class="btn" data-action="duplicate-item" data-collection="' + escapeHtml(collectionPath) + '" data-index="' + escapeHtml(String(index)) + '">复制</button><button class="btn" data-action="delete-item" data-collection="' + escapeHtml(collectionPath) + '" data-index="' + escapeHtml(String(index)) + '">删除</button></div></div><div class="repeatable-body">' + innerHtml + "</div></article>";
+      }
+
+      function renderProjectInfoTab() {
+        return '<section class="card"><h2 class="section-title">项目基础信息</h2><p class="section-subtitle">把项目最核心的定义先填在这里，后面的章节、角色、镜头和素材都会围绕这一层展开。</p><div class="form-grid">' +
+          renderField("项目名称", "projectInfo.projectName", state.projectInfo.projectName, { placeholder: "例如：朱雀异世 第一季" }) +
+          renderField("小说名称", "projectInfo.novelName", state.projectInfo.novelName, { placeholder: "原著名称" }) +
+          renderField("改编章节范围", "projectInfo.chapterRange", state.projectInfo.chapterRange, { placeholder: "例如：第1-12章" }) +
+          renderField("集数规划", "projectInfo.episodePlan", state.projectInfo.episodePlan, { placeholder: "例如：12集，前3集做开场世界观" }) +
+          renderField("单集时长", "projectInfo.episodeDuration", state.projectInfo.episodeDuration, { placeholder: "例如：60-90秒" }) +
+          renderField("视频比例", "projectInfo.ratio", state.projectInfo.ratio, { type: "select", items: ["横屏 16:9", "竖屏 9:16", "方屏 1:1", "其他"] }) +
+          renderField("目标平台", "projectInfo.targetPlatforms", state.projectInfo.targetPlatforms, { placeholder: "例如：抖音 / 视频号" }) +
+          renderField("整体风格定位", "projectInfo.style", state.projectInfo.style, { placeholder: "例如：古风温馨 / 华丽仙侠" }) +
+          renderField("目标受众", "projectInfo.audience", state.projectInfo.audience, { placeholder: "例如：女性向 / 轻奇幻 / 15-30岁" }) +
+          renderField("更新频率", "projectInfo.updateFrequency", state.projectInfo.updateFrequency, { placeholder: "例如：周更 3 集" }) +
+          '</div><div class="notice">建议先把“视频比例”“目标平台”“整体风格定位”填完整，再继续生成角色、场景和镜头内容，这样后面的视觉统一会稳很多。</div></section>';
+      }
+
+      function renderWorkflowTab() {
+        return '<section class="card"><h2 class="section-title">制作总流程清单</h2><p class="section-subtitle">这里适合做全局进度管理。你可以用它追踪从前期策划到最终导出的整体完成度。</p><div class="check-grid">' +
+          renderChecklistGroup("前期策划", "workflow.planning", state.workflow.planning) +
+          renderChecklistGroup("剧情改编", "workflow.adaptation", state.workflow.adaptation) +
+          renderChecklistGroup("视觉制作", "workflow.visuals", state.workflow.visuals) +
+          renderChecklistGroup("音频制作", "workflow.audio", state.workflow.audio) +
+          renderChecklistGroup("视频合成", "workflow.video", state.workflow.video) +
+          '</div></section>';
+      }
+
+      function renderEpisodesTab() {
+        return renderRepeatableSection({
+          title: "章节改编信息",
+          subtitle: "按集拆梗概、看点和情绪曲线。这里最适合做一集一条，持续扩展。",
+          collectionPath: "episodes",
+          renderItem: function (item, index) {
+            const title = item.chapterName || ("章节 " + (index + 1));
+            const subtitle = [item.volumeName, item.sourceRange, item.targetDuration].filter(Boolean).join(" / ") || "填写卷名、章节范围和时长目标";
+            return renderRepeatableCard("episodes", index, item, title, subtitle,
+              '<div class="form-grid">' +
+              renderField("卷名", "episodes." + index + ".volumeName", item.volumeName, { placeholder: "卷名" }) +
+              renderField("章节名", "episodes." + index + ".chapterName", item.chapterName, { placeholder: "章节名" }) +
+              renderField("原文范围", "episodes." + index + ".sourceRange", item.sourceRange, { placeholder: "原文起止" }) +
+              renderField("本集时长目标", "episodes." + index + ".targetDuration", item.targetDuration, { placeholder: "例如：75秒" }) +
+              renderField("一句话梗概", "episodes." + index + ".logline", item.logline, { type: "textarea", full: true, placeholder: "用一句话写清本集命运转折或核心冲突" }) +
+              renderField("核心看点", "episodes." + index + ".highlights", item.highlights, { type: "textarea", full: true, placeholder: "一行一个看点，例如：看点1：..." }) +
+              renderField("开场情绪", "episodes." + index + ".openingEmotion", item.openingEmotion, { placeholder: "例如：神秘 / 紧张" }) +
+              renderField("中段情绪", "episodes." + index + ".middleEmotion", item.middleEmotion, { placeholder: "例如：推进 / 压迫" }) +
+              renderField("高潮情绪", "episodes." + index + ".climaxEmotion", item.climaxEmotion, { placeholder: "例如：高燃 / 震撼" }) +
+              renderField("结尾情绪", "episodes." + index + ".endingEmotion", item.endingEmotion, { placeholder: "例如：留悬念 / 治愈" }) +
+              renderField("备注", "episodes." + index + ".notes", item.notes, { type: "textarea", full: true, placeholder: "补充删改原则、保留台词、埋伏笔等" }) +
+              "</div>"
+            );
+          }
+        });
+      }
+
+      function renderCharactersTab() {
+        return renderRepeatableSection({
+          title: "角色设定清单",
+          subtitle: "角色卡支持直接补充人设 Prompt、准备项和图片素材，适合做视觉统一基线。",
+          collectionPath: "characters",
+          renderItem: function (item, index) {
+            const title = item.name || ("角色 " + (index + 1));
+            const subtitle = [item.positioning, item.identity, item.voiceType].filter(Boolean).join(" / ") || "填写身份、定位与声音类型";
+            return renderRepeatableCard("characters", index, item, title, subtitle,
+              '<div class="form-grid">' +
+              renderField("角色名", "characters." + index + ".name", item.name, { placeholder: "角色名" }) +
+              renderField("身份", "characters." + index + ".identity", item.identity, { placeholder: "例如：女主 / 师尊 / 反派" }) +
+              renderField("年龄外观", "characters." + index + ".ageAppearance", item.ageAppearance, { placeholder: "外观年龄与气质" }) +
+              renderField("性格关键词", "characters." + index + ".keywords", item.keywords, { placeholder: "例如：冷静、果断、嘴硬心软" }) +
+              renderField("人物定位", "characters." + index + ".positioning", item.positioning, { type: "select", items: ["主角", "配角", "反派", "助力角色", "其他"] }) +
+              renderField("声音类型", "characters." + index + ".voiceType", item.voiceType, { type: "select", items: ["少女音", "御姐音", "大叔音", "少年音", "其他"] }) +
+              renderField("外貌特征", "characters." + index + ".appearance", item.appearance, { type: "textarea", full: true, placeholder: "例如：凤眼、银色发饰、眼下泪痣..." }) +
+              renderField("服装风格", "characters." + index + ".outfit", item.outfit, { type: "textarea", full: true, placeholder: "例如：层叠广袖、深红金边、轻甲点缀..." }) +
+              renderField("代表色", "characters." + index + ".color", item.color, { placeholder: "例如：朱砂红 / 玄黑 / 冷白" }) +
+              renderField("常用表情", "characters." + index + ".expressions", item.expressions, { type: "textarea", full: true, placeholder: "一行一个，例如：冷笑 / 惊愕 / 红眼落泪" }) +
+              renderField("常用动作", "characters." + index + ".actions", item.actions, { type: "textarea", full: true, placeholder: "一行一个，例如：回头、抬手施法、护住同伴" }) +
+              renderField("角色关键词 Prompt", "characters." + index + ".prompt", item.prompt, { type: "textarea", full: true, placeholder: "写角色正向提示词，方便 AI 出图统一风格" }) +
+              "</div>" +
+              renderChecklistGroup("建议至少准备", "characters." + index + ".prepItems", item.prepItems) +
+              renderImagePanel("characters", index, item.images)
+            );
+          }
+        });
+      }
+
+      function renderScenesTab() {
+        return renderRepeatableSection({
+          title: "场景设定清单",
+          subtitle: "适合记录主场景和氛围版本，方便后续出图和剪辑时快速回收素材。",
+          collectionPath: "scenes",
+          renderItem: function (item, index) {
+            const title = item.name || ("场景 " + (index + 1));
+            const subtitle = [item.purpose, item.time, item.mood].filter(Boolean).join(" / ") || "填写用途、时间与氛围";
+            return renderRepeatableCard("scenes", index, item, title, subtitle,
+              '<div class="form-grid">' +
+              renderField("场景名称", "scenes." + index + ".name", item.name, { placeholder: "例如：万兽荒野入口" }) +
+              renderField("用途", "scenes." + index + ".purpose", item.purpose, { type: "select", items: ["开场", "对话", "战斗", "回忆", "结尾", "其他"] }) +
+              renderField("时间", "scenes." + index + ".time", item.time, { type: "select", items: ["白天", "夜晚", "黄昏", "雨天", "雪天", "其他"] }) +
+              renderField("氛围", "scenes." + index + ".mood", item.mood, { type: "select", items: ["温馨", "压迫", "神秘", "高燃", "治愈", "其他"] }) +
+              renderField("场景描述", "scenes." + index + ".description", item.description, { type: "textarea", full: true, placeholder: "描述空间层次、镜头重点和剧情用途" }) +
+              renderField("画风要求", "scenes." + index + ".visualStyle", item.visualStyle, { type: "textarea", full: true, placeholder: "例如：柔雾、暖光、古风动画感、光束切片..." }) +
+              renderField("颜色关键词", "scenes." + index + ".colorKeywords", item.colorKeywords, { placeholder: "例如：金雾、青林、冷蓝月光" }) +
+              renderField("场景 Prompt", "scenes." + index + ".prompt", item.prompt, { type: "textarea", full: true, placeholder: "写场景正向提示词" }) +
+              "</div>" +
+              renderChecklistGroup("常见场景准备项", "scenes." + index + ".prepItems", item.prepItems) +
+              renderImagePanel("scenes", index, item.images)
+            );
+          }
+        });
+      }
+
+      function renderPropsTab() {
+        return renderRepeatableSection({
+          title: "道具 / 特效设定清单",
+          subtitle: "武器、法器、灵兽、魔法光效都可以作为独立条目维护。",
+          collectionPath: "props",
+          renderItem: function (item, index) {
+            const title = item.name || ("道具/特效 " + (index + 1));
+            const subtitle = [item.owner, item.useCase].filter(Boolean).join(" / ") || "填写归属角色与用途";
+            return renderRepeatableCard("props", index, item, title, subtitle,
+              '<div class="form-grid">' +
+              renderField("道具名称", "props." + index + ".name", item.name, { placeholder: "名称" }) +
+              renderField("归属角色", "props." + index + ".owner", item.owner, { placeholder: "角色名" }) +
+              renderField("用途", "props." + index + ".useCase", item.useCase, { placeholder: "例如：战斗 / 转场 / 象征物" }) +
+              renderField("材质 / 颜色", "props." + index + ".material", item.material, { placeholder: "例如：玄铁金纹、玉骨蓝焰" }) +
+              renderField("外观描述", "props." + index + ".appearance", item.appearance, { type: "textarea", full: true, placeholder: "形态、构造、细节、识别元素" }) +
+              renderField("特效描述", "props." + index + ".effect", item.effect, { type: "textarea", full: true, placeholder: "火焰、烟雾、结界、粒子、拖尾等" }) +
+              renderField("Prompt", "props." + index + ".prompt", item.prompt, { type: "textarea", full: true, placeholder: "写这件道具或特效的出图提示词" }) +
+              "</div>" +
+              renderImagePanel("props", index, item.images)
+            );
+          }
+        });
+      }
+
+      function renderStoryboardsTab() {
+        return renderRepeatableSection({
+          title: "分镜脚本模板",
+          subtitle: "每个镜头单独一张卡片，适合边写边补参考图，再导入剪映或继续喂给 AI 出图。",
+          collectionPath: "storyboards",
+          renderItem: function (item, index) {
+            const title = "镜头 " + (item.shotNumber || String(index + 1).padStart(2, "0"));
+            const subtitle = [item.timing, item.shotSize].filter(Boolean).join(" / ") || "填写时间和景别";
+            return renderRepeatableCard("storyboards", index, item, title, subtitle,
+              '<div class="form-grid three">' +
+              renderField("镜头号", "storyboards." + index + ".shotNumber", item.shotNumber, { placeholder: "01" }) +
+              renderField("时间", "storyboards." + index + ".timing", item.timing, { placeholder: "00:00-00:05" }) +
+              renderField("景别", "storyboards." + index + ".shotSize", item.shotSize, { placeholder: "特写 / 中景 / 远景" }) +
+              renderField("画面内容", "storyboards." + index + ".visual", item.visual, { type: "textarea", full: true, placeholder: "画面主体、构图、环境、镜头目标" }) +
+              renderField("人物动作", "storyboards." + index + ".action", item.action, { type: "textarea", full: true, placeholder: "角色动作和镜头运动" }) +
+              renderField("台词 / 旁白", "storyboards." + index + ".dialogue", item.dialogue, { type: "textarea", full: true, placeholder: "填角色台词或旁白" }) +
+              renderField("音效 / BGM", "storyboards." + index + ".audio", item.audio, { placeholder: "风声 / 狼嚎 / 高潮 BGM" }) +
+              renderField("备注", "storyboards." + index + ".note", item.note, { type: "textarea", full: true, placeholder: "用于标记节奏、转场、特效需求" }) +
+              "</div>" +
+              renderImagePanel("storyboards", index, item.images)
+            );
+          }
+        });
+      }
+
+      function renderPromptBlock(title, path, block) {
+        return '<section class="card"><h2 class="section-title">' + escapeHtml(title) + '</h2><div class="form-grid">' +
+          renderField("名称", path + ".name", block.name, { placeholder: "例如：女主 Prompt / 荒野场景 Prompt" }) +
+          renderField("提示词", path + ".prompt", block.prompt, { type: "textarea", full: true, placeholder: "正向提示词" }) +
+          renderField("负面提示词", path + ".negative", block.negative, { type: "textarea", full: true, placeholder: "negative prompt，可留空" }) +
+          "</div></section>";
+      }
+
+      function renderPromptsTab() {
+        return renderPromptBlock("人物 Prompt 模板", "prompts.character", state.prompts.character) +
+          renderPromptBlock("场景 Prompt 模板", "prompts.scene", state.prompts.scene) +
+          renderPromptBlock("镜头 Prompt 模板", "prompts.shot", state.prompts.shot);
+      }
+
+      function renderVoiceLinesTab() {
+        return renderRepeatableSection({
+          title: "配音与台词清单",
+          subtitle: "序号、角色、情绪、时长和录制状态都可以直接管理，适合做口播与配音跟进。",
+          collectionPath: "voiceLines",
+          renderItem: function (item, index) {
+            const title = (item.sequence || String(index + 1).padStart(2, "0")) + " / " + (item.role || "未命名角色");
+            const subtitle = [item.emotion, item.duration, item.recorded ? "已录制" : "未录制"].filter(Boolean).join(" / ");
+            return renderRepeatableCard("voiceLines", index, item, title, subtitle,
+              '<div class="form-grid three">' +
+              renderField("序号", "voiceLines." + index + ".sequence", item.sequence, { placeholder: "01" }) +
+              renderField("角色", "voiceLines." + index + ".role", item.role, { placeholder: "旁白 / 父亲 / 女主" }) +
+              renderField("情绪", "voiceLines." + index + ".emotion", item.emotion, { placeholder: "紧张 / 激动 / 低沉" }) +
+              renderField("时长", "voiceLines." + index + ".duration", item.duration, { placeholder: "4s" }) +
+              renderField("台词内容", "voiceLines." + index + ".content", item.content, { type: "textarea", full: true, placeholder: "输入完整台词或旁白" }) +
+              '</div><label class="toggle-row"><input type="checkbox" data-path="voiceLines.' + index + '.recorded"' + (item.recorded ? " checked" : "") + '><span>是否已录制</span></label>'
+            );
+          }
+        }) + '<section class="card"><h2 class="section-title">旁白与配音检查</h2><div class="check-grid">' +
+          renderChecklistGroup("旁白检查项", "audio.narrationChecks", state.audio.narrationChecks) +
+          renderChecklistGroup("配音检查项", "audio.voiceChecks", state.audio.voiceChecks) +
+          "</div></section>";
+      }
+
+      function renderAudioRow(item, index) {
+        return '<div class="mini-row five">' +
+          renderField("场景", "audio.backgroundMusic." + index + ".scene", item.scene, { placeholder: "开场 / 高潮" }) +
+          renderField("音乐类型", "audio.backgroundMusic." + index + ".musicType", item.musicType, { placeholder: "神秘古风 / 激烈史诗" }) +
+          renderField("用途", "audio.backgroundMusic." + index + ".purpose", item.purpose, { placeholder: "建立氛围 / 冲突爆发" }) +
+          renderField("备注", "audio.backgroundMusic." + index + ".notes", item.notes, { placeholder: "收尾留白、是否要鼓点" }) +
+          '<label class="toggle-row"><input type="checkbox" data-path="audio.backgroundMusic.' + index + '.ready"' + (item.ready ? " checked" : "") + '><span>已准备</span></label>' +
+          '<div class="repeatable-actions"><button class="btn" data-action="duplicate-item" data-collection="audio.backgroundMusic" data-index="' + escapeHtml(String(index)) + '">复制</button><button class="btn" data-action="delete-item" data-collection="audio.backgroundMusic" data-index="' + escapeHtml(String(index)) + '">删除</button></div>' +
+          "</div>";
+      }
+
+      function renderAudioTab() {
+        return '<section class="card"><div class="repeatable-head"><div><h2 class="section-title">背景音乐清单</h2><p class="section-subtitle">这里可以继续往下补更多场景音乐，适合按场景或情绪分类管理。</p></div><button class="btn primary" data-action="add-item" data-collection="audio.backgroundMusic">新增音乐项</button></div><div class="mini-table">' +
+          state.audio.backgroundMusic.map(renderAudioRow).join("") +
+          '</div></section><section class="card"><h2 class="section-title">音效清单</h2><div class="check-grid">' +
+          renderChecklistGroup("音效准备", "audio.effects", state.audio.effects) +
+          '</div></section>';
+      }
+
+      function renderEditingTab() {
+        return '<section class="card"><h2 class="section-title">剪辑执行清单</h2><p class="section-subtitle">把素材导入、动态效果、字幕、音频和导出设置分开跟踪，能更快定位卡点。</p><div class="check-grid">' +
+          renderChecklistGroup("画面处理", "editing.visuals", state.editing.visuals) +
+          renderChecklistGroup("字幕处理", "editing.subtitles", state.editing.subtitles) +
+          renderChecklistGroup("音频处理", "editing.audio", state.editing.audio) +
+          renderChecklistGroup("导出设置", "editing.exportSettings", state.editing.exportSettings) +
+          "</div></section>";
+      }
+
+      function renderQualityTab() {
+        return '<section class="card"><h2 class="section-title">质量检查清单</h2><p class="section-subtitle">出片前最后一轮巡检。这里越完整，返工概率越低。</p><div class="check-grid">' +
+          renderChecklistGroup("内容检查", "quality.content", state.quality.content) +
+          renderChecklistGroup("视觉检查", "quality.visual", state.quality.visual) +
+          renderChecklistGroup("音频检查", "quality.audio", state.quality.audio) +
+          renderChecklistGroup("发布检查", "quality.release", state.quality.release) +
+          "</div></section>";
+      }
+
+      function renderFoldersTab() {
+        return renderRepeatableSection({
+          title: "项目文件夹模板",
+          subtitle: "你可以在这里直接维护整个漫剧工程的文件夹结构说明，后面照着建目录就行。",
+          collectionPath: "folders",
+          renderItem: function (item, index) {
+            const title = item.name || ("文件夹 " + (index + 1));
+            const subtitle = item.note || "填写用途说明";
+            return renderRepeatableCard("folders", index, item, title, subtitle,
+              '<div class="form-grid">' +
+              renderField("文件夹名", "folders." + index + ".name", item.name, { placeholder: "例如：07_人物图片" }) +
+              renderField("用途说明", "folders." + index + ".note", item.note, { type: "textarea", full: true, placeholder: "说明这个目录存什么" }) +
+              "</div>"
+            );
+          }
+        });
+      }
+
+      function renderDemoChecklistTab() {
+        return '<section class="card"><h2 class="section-title">最简开工版</h2><p class="section-subtitle">如果你先想跑一个 Demo，可以只盯住下面这些关键件，尽快从“文案”进到“成片”。</p><div class="check-grid">' +
+          renderChecklistGroup("Demo 必要项", "demoChecklist", state.demoChecklist) +
+          '</div><div class="notice">这个模块很适合配合“章节改编”和“分镜脚本”一起使用。先确保 Demo 核心链路跑通，再慢慢补足角色、场景和特效细节。</div></section>';
+      }
+
+      function renderActiveTab() {
+        switch (activeTab) {
+          case "projectInfo": return renderProjectInfoTab();
+          case "workflow": return renderWorkflowTab();
+          case "episodes": return renderEpisodesTab();
+          case "characters": return renderCharactersTab();
+          case "scenes": return renderScenesTab();
+          case "props": return renderPropsTab();
+          case "storyboards": return renderStoryboardsTab();
+          case "prompts": return renderPromptsTab();
+          case "voiceLines": return renderVoiceLinesTab();
+          case "audio": return renderAudioTab();
+          case "editing": return renderEditingTab();
+          case "quality": return renderQualityTab();
+          case "folders": return renderFoldersTab();
+          case "demoChecklist": return renderDemoChecklistTab();
+          default: return renderProjectInfoTab();
+        }
+      }
+
+      function renderOverview() {
+        const stats = getProgressStats();
+        const projectName = state.projectInfo.projectName || "未命名项目";
+        const novelName = state.projectInfo.novelName || "待填写";
+        const chapterRange = state.projectInfo.chapterRange || "待填写";
+        const ratio = state.projectInfo.ratio || "待填写";
+        const platforms = state.projectInfo.targetPlatforms || "待填写";
+        return '<section class="overview">' +
+          '<article class="metric"><span class="metric-label">项目名称</span><span class="metric-value">' + escapeHtml(projectName) + '</span></article>' +
+          '<article class="metric"><span class="metric-label">小说名称</span><span class="metric-value">' + escapeHtml(novelName) + '</span></article>' +
+          '<article class="metric"><span class="metric-label">改编章节范围</span><span class="metric-value">' + escapeHtml(chapterRange) + '</span></article>' +
+          '<article class="metric"><span class="metric-label">视频比例</span><span class="metric-value">' + escapeHtml(ratio) + '</span></article>' +
+          '<article class="metric"><span class="metric-label">目标平台</span><span class="metric-value">' + escapeHtml(platforms) + '</span></article>' +
+          '<article class="metric"><span class="metric-label">总进度</span><span class="metric-value">' + stats.percentage + '%</span></article>' +
+          '<article class="metric"><span class="metric-label">已完成项</span><span class="metric-value">' + stats.done + '</span></article>' +
+          '<article class="metric"><span class="metric-label">未完成项</span><span class="metric-value">' + stats.pending + '</span></article>' +
+          "</section>";
+      }
+
+      function renderTabs() {
+        return '<nav class="tabs">' + tabs.map((tab) => {
+          const active = tab.id === activeTab ? " active" : "";
+          return '<button class="tab' + active + '" data-action="switch-tab" data-tab="' + escapeHtml(tab.id) + '">' + escapeHtml(tab.label) + "</button>";
+        }).join("") + "</nav>";
+      }
+
+      function renderApp() {
+        document.title = APP_TITLE;
+        app.innerHTML = '<div class="page"><header class="hero"><div class="hero-top"><div class="hero-copy"><h1>' + APP_TITLE + '</h1><p>一个单文件、可离线使用的漫剧制作工作台。你可以在这里持续补充章节改编、角色设定、场景与分镜内容，也可以上传本地图片做素材预览，并把整个项目导出成 JSON 继续接力。</p></div><div class="toolbar"><button class="btn" data-action="new-blank">新建空白项目</button><button class="btn" data-action="reset-template">恢复默认模板</button><button class="btn" data-action="export-json">导出 JSON</button><button class="btn" data-action="import-json">导入 JSON</button><button class="btn primary" data-action="print-page">打印 / 导出 PDF</button><div id="save-status" class="status-pill" data-state="' + escapeHtml(saveStateLabel) + '"><span class="status-dot"></span><span class="status-text">' + escapeHtml(saveMessage) + '</span></div></div></div>' + renderOverview() + renderTabs() + '</header><main class="panel">' + renderActiveTab() + '</main><div class="footer-note">提示：图片会以浏览器本地数据形式保存。若上传很多大图，建议定期导出 JSON 备份。</div></div>';
+        autoResizeTextareas();
+      }
+
+      function refreshAfterStructureChange() {
+        queueSave();
+        renderApp();
+      }
+
+      function duplicateCollectionItem(collectionPath, index) {
+        const collection = getByPath(state, collectionPath);
+        if (!Array.isArray(collection) || !collection[index]) {
+          return;
+        }
+        const copy = deepClone(collection[index]);
+        copy.id = uid("copy");
+        collection.splice(index + 1, 0, copy);
+        refreshAfterStructureChange();
+      }
+
+      function addCollectionItem(collectionPath) {
+        const collection = getByPath(state, collectionPath);
+        if (!Array.isArray(collection) || !collectionFactories[collectionPath]) {
+          return;
+        }
+        collection.push(collectionFactories[collectionPath](collection));
+        refreshAfterStructureChange();
+      }
+
+      function deleteCollectionItem(collectionPath, index) {
+        const collection = getByPath(state, collectionPath);
+        if (!Array.isArray(collection) || !collection[index]) {
+          return;
+        }
+        if (!window.confirm("确定删除这一条吗？")) {
+          return;
+        }
+        collection.splice(index, 1);
+        if (collection.length === 0 && collectionFactories[collectionPath]) {
+          collection.push(collectionFactories[collectionPath](collection));
+        }
+        refreshAfterStructureChange();
+      }
+
+      function toggleCollapsed(collectionPath, index) {
+        const collection = getByPath(state, collectionPath);
+        if (!Array.isArray(collection) || !collection[index]) {
+          return;
+        }
+        collection[index].collapsed = !collection[index].collapsed;
+        refreshAfterStructureChange();
+      }
+
+      function removeImage(collectionPath, index, imageIndex) {
+        const collection = getByPath(state, collectionPath);
+        if (!Array.isArray(collection) || !collection[index] || !Array.isArray(collection[index].images)) {
+          return;
+        }
+        collection[index].images.splice(imageIndex, 1);
+        refreshAfterStructureChange();
+      }
+
+      function updateField(path, value, rerender) {
+        setByPath(state, path, value);
+        queueSave();
+        if (rerender) {
+          renderApp();
+        }
+      }
+
+      function exportJson() {
+        const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "novel-manga-checklist-" + new Date().toISOString().slice(0, 10) + ".json";
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+      }
+
+      function importJson(file) {
+        if (!file) {
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = function (event) {
+          try {
+            const imported = JSON.parse(event.target.result);
+            if (!window.confirm("导入会覆盖当前页面里的内容，确定继续吗？")) {
+              return;
+            }
+            state = normalizeState(imported);
+            saveStateLabel = "saved";
+            saveMessage = "已导入 JSON 数据";
+            queueSave();
+            renderApp();
+          } catch (error) {
+            console.warn("导入失败", error);
+            window.alert("导入失败：文件不是有效的 JSON，或者结构不完整。");
+          }
+        };
+        reader.readAsText(file);
+      }
+
+      function readFileAsImage(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = function () {
+            resolve({
+              id: uid("img"),
+              name: file.name,
+              dataUrl: reader.result
+            });
+          };
+          reader.onerror = function () {
+            reject(new Error("图片读取失败"));
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+
+      async function appendImages(collectionPath, itemIndex, files) {
+        const collection = getByPath(state, collectionPath);
+        if (!Array.isArray(collection) || !collection[itemIndex]) {
+          return;
+        }
+        try {
+          const images = await Promise.all(Array.from(files).map(readFileAsImage));
+          collection[itemIndex].images = collection[itemIndex].images.concat(images);
+          refreshAfterStructureChange();
+        } catch (error) {
+          console.warn("图片处理失败", error);
+          window.alert("图片读取失败，请换一张图片再试。");
+        }
+      }
+
+      function resetProject(mode) {
+        const message = mode === "blank" ? "确定新建空白项目吗？当前内容会被覆盖。" : "确定恢复默认模板吗？当前内容会被覆盖。";
+        if (!window.confirm(message)) {
+          return;
+        }
+        state = createDefaultState(mode);
+        saveStateLabel = "saved";
+        saveMessage = mode === "blank" ? "已创建空白项目" : "已恢复默认模板";
+        queueSave();
+        renderApp();
+      }
+
+      document.addEventListener("click", function (event) {
+        const target = event.target.closest("[data-action]");
+        if (!target) {
+          return;
+        }
+        const action = target.dataset.action;
+        if (action === "switch-tab") {
+          activeTab = target.dataset.tab;
+          renderApp();
+          return;
+        }
+        if (action === "add-item") {
+          addCollectionItem(target.dataset.collection);
+          return;
+        }
+        if (action === "duplicate-item") {
+          duplicateCollectionItem(target.dataset.collection, Number(target.dataset.index));
+          return;
+        }
+        if (action === "delete-item") {
+          deleteCollectionItem(target.dataset.collection, Number(target.dataset.index));
+          return;
+        }
+        if (action === "toggle-collapse") {
+          toggleCollapsed(target.dataset.collection, Number(target.dataset.index));
+          return;
+        }
+        if (action === "remove-image") {
+          removeImage(target.dataset.collection, Number(target.dataset.index), Number(target.dataset.imageIndex));
+          return;
+        }
+        if (action === "export-json") {
+          exportJson();
+          return;
+        }
+        if (action === "import-json") {
+          importInput.click();
+          return;
+        }
+        if (action === "print-page") {
+          window.print();
+          return;
+        }
+        if (action === "new-blank") {
+          resetProject("blank");
+          return;
+        }
+        if (action === "reset-template") {
+          resetProject("template");
+        }
+      });
+
+      document.addEventListener("input", function (event) {
+        const target = event.target;
+        if (!target.matches("[data-path]")) {
+          return;
+        }
+        if (target.type === "checkbox") {
+          return;
+        }
+        updateField(target.dataset.path, target.value, false);
+        if (target.tagName === "TEXTAREA") {
+          target.style.height = "auto";
+          target.style.height = Math.max(target.scrollHeight, 110) + "px";
+        }
+      });
+
+      document.addEventListener("change", function (event) {
+        const target = event.target;
+        if (target.matches('input[type="checkbox"][data-path]')) {
+          updateField(target.dataset.path, target.checked, true);
+          return;
+        }
+        if (target.matches('select[data-path]')) {
+          updateField(target.dataset.path, target.value, false);
+          return;
+        }
+        if (target.matches('input[type="file"][data-upload-path]')) {
+          appendImages(target.dataset.uploadPath, Number(target.dataset.itemIndex), target.files);
+          target.value = "";
+          return;
+        }
+      });
+
+      importInput.addEventListener("change", function () {
+        const file = importInput.files[0];
+        importJson(file);
+        importInput.value = "";
+      });
+
+      renderApp();
+    })();
+  </script>
+</body>
+</html>
