@@ -957,6 +957,243 @@
         return createChecklist(["原文章节", "1段剧情梗概", "角色设定图", "3-5张场景图", "分镜脚本", "台词/旁白", "AI 配音", "背景音乐", "剪映合成"]);
       }
 
+      function markChecklistDone(items, labels) {
+        const set = new Set(labels || []);
+        items.forEach((item) => {
+          item.done = set.has(item.label);
+        });
+      }
+
+      function buildZhuqueEpisodeOneTemplate(template) {
+        template.projectInfo.projectName = "《朱雀异世》第一集：荒野认女";
+        template.projectInfo.novelName = "《朱雀异世》";
+        template.projectInfo.chapterRange = "开篇荒野初见段";
+        template.projectInfo.episodePlan = "试播第 1 集 / 荒野认女开场";
+        template.projectInfo.episodeDuration = "00:00-01:05";
+        template.projectInfo.ratio = "横屏 16:9";
+        template.projectInfo.targetPlatforms = "B站 / 抖音 / 视频号";
+        template.projectInfo.style = "东方玄幻童话 / 温馨动画电影风 / 荒野奇迹感";
+        template.projectInfo.audience = "女频玄幻短剧受众 / 动画向用户 / 东方幻想爱好者";
+        template.projectInfo.updateFrequency = "试播集完成后可拆条发布";
+
+        markChecklistDone(template.workflow.planning, [
+          "确定单集时长",
+          "确定改编方式（旁白型 / 对话型 / 高燃剪辑型）",
+          "确定整体画风",
+          "确定角色视觉统一方案"
+        ]);
+        markChecklistDone(template.workflow.adaptation, [
+          "提炼章节梗概",
+          "拆分关键剧情点",
+          "补充适合视觉表达的动作/镜头",
+          "生成分镜脚本",
+          "整理旁白和台词"
+        ]);
+
+        const episode = createEpisode();
+        episode.volumeName = "开篇";
+        episode.chapterName = "荒野初见";
+        episode.sourceRange = "女主妖娆在万兽荒野出生并被疯癫男人认女的开场段落";
+        episode.targetDuration = "00:00-01:05";
+        episode.logline = "妖娆在万兽荒野中睁眼，先撞见一个疯癫却把她认作亲女的疤脸男人；当奇迹与杀机接连降临，这段荒野父女缘被硬生生写进命运。";
+        episode.highlights = "看点1：女主一出生就掉进万兽荒野，生存压迫感直接拉满。\n看点2：疯癫父亲先狂笑认女，再举婴引来天光与百鸟朝拜，反差冲击强。\n看点3：灭魔之光、泥地爬行、最终抱回认女，情绪连续翻转。";
+        episode.openingEmotion = "阴郁压迫";
+        episode.middleEmotion = "震惊与神迹交织";
+        episode.climaxEmotion = "杀机骤起 / 高压紧张";
+        episode.endingEmotion = "温柔回落 / 羁绊初现";
+        episode.notes = "本集重点是世界观开场、父亲人设反差和婴儿求生感，适合做试播集与高概念引流。";
+        template.episodes = [episode];
+
+        const yaorao = createCharacter();
+        yaorao.name = "妖娆";
+        yaorao.identity = "新生女婴 / 女主幼年态";
+        yaorao.ageAppearance = "刚出生不久，圆脸大眼，体型小巧";
+        yaorao.keywords = "懵懂、警觉、求生欲强、天命感";
+        yaorao.positioning = "主角";
+        yaorao.appearance = "圆脸、大眼睛、婴儿感明显，泥泞状态下也要保留可爱与灵动，不要惊悚化。";
+        yaorao.outfit = "粉色襁褓为主，后段变成泥泞婴儿状态，始终保持柔软可爱的轮廓。";
+        yaorao.color = "粉金 / 暖白 / 柔桃色";
+        yaorao.expressions = "惊惧\n懵懂\n倔强\n被抱起时的放松";
+        yaorao.actions = "睁眼观察\n被高举向天空\n泥地向前爬行\n被重新抱回";
+        yaorao.voiceType = "其他";
+        yaorao.prompt = "婴儿保持圆脸大眼、粉色襁褓或泥泞婴儿状态，温馨动画电影风格，东方玄幻童话气质，柔和笔触，高级插画质感，cinematic composition，light bloom，细腻体积光。";
+
+        const father = createCharacter();
+        father.name = "疯癫父亲";
+        father.identity = "荒野强者 / 妖娆的认女对象";
+        father.ageAppearance = "青年到壮年之间，英俊但带危险感";
+        father.keywords = "疯狂、危险、偏执、戏剧化、内里残存温柔";
+        father.positioning = "助力角色";
+        father.appearance = "黑色长发、苍绿色眼睛、脸上蜈蚣状疤痕，表情夸张时仍保留动画电影气质。";
+        father.outfit = "红金长袍，袍角在风中翻飞，整体轮廓华丽但不失野性。";
+        father.color = "红金 / 苍绿 / 乌黑";
+        father.expressions = "仰头狂笑\n审判般冰冷\n抱头发狂\n温柔释然";
+        father.actions = "高举婴儿\n指尖凝聚灭魔之光\n半跪捶地\n将婴儿按在胸口";
+        father.voiceType = "大叔音";
+        father.prompt = "男人保持黑长发、苍绿色眼睛、脸上蜈蚣状疤痕、红金长袍，东方玄幻童话感，气质危险而华丽，close-up portrait，dramatic wind，soft rim light，animated feature film illustration。";
+
+        template.characters = [yaorao, father];
+
+        const forestSea = createScene();
+        forestSea.name = "阴森林海";
+        forestSea.purpose = "开场";
+        forestSea.description = "阴暗浩瀚的森林海与群山延绵，乌云压顶，林海深处散布无数兽眼，突出荒野的危险与孤寂。";
+        forestSea.time = "夜晚";
+        forestSea.mood = "压迫";
+        forestSea.visualStyle = "东方玄幻童话风，层次丰富的森林体积光与薄雾，不做写实恐怖。";
+        forestSea.colorKeywords = "乌青 / 墨绿 / 冷灰 / 兽眼幽光";
+        forestSea.prompt = "wide shot, vast dark forest sea, mystical mountains, glowing beast eyes in the woods, moody fog, storm clouds, fantasy wilderness, cinematic scale, warm fantasy animation illustration";
+
+        const miracleClearing = createScene();
+        miracleClearing.name = "奇迹天光空地";
+        miracleClearing.purpose = "高潮";
+        miracleClearing.description = "男人将新生女婴高举向天空，乌云裂开，万丈阳光倾泻而下，百鸟与群兽共同形成神迹感。";
+        miracleClearing.time = "白天";
+        miracleClearing.mood = "高燃";
+        miracleClearing.visualStyle = "神圣暖光、大场面、史诗动画质感，强调命运降临而非宗教写实。";
+        miracleClearing.colorKeywords = "金白 / 暖橙 / 云层裂隙 / 神圣光柱";
+        miracleClearing.prompt = "miracle scene, divine sunbeam breaking clouds, baby lifted to the sky, birds circling, beasts bowing, epic fantasy animation, holy warm light";
+
+        const muddyClearing = createScene();
+        muddyClearing.name = "泥泞森林空地";
+        muddyClearing.purpose = "结尾";
+        muddyClearing.description = "男人抱头发狂，婴儿在泥水里笨拙爬行，之后夕阳落下，父亲重新抱起像小泥猴一样的妖娆。";
+        muddyClearing.time = "黄昏";
+        muddyClearing.mood = "治愈";
+        muddyClearing.visualStyle = "前半段混乱压迫，后半段金橙暖光收束，突出父女情绪回落。";
+        muddyClearing.colorKeywords = "泥棕 / 森林灰绿 / 夕阳金橙";
+        muddyClearing.prompt = "warm ending, father holding baby close, sunset glow, emotional healing, fantasy forest horizon, tender embrace, animated feature film illustration";
+
+        template.scenes = [forestSea, miracleClearing, muddyClearing];
+
+        const holyLight = createProp();
+        holyLight.name = "灭魔之光";
+        holyLight.owner = "疯癫父亲";
+        holyLight.useCase = "杀机骤起时的核心特效";
+        holyLight.appearance = "一团纯白色神圣光球，明亮、纯净、具压迫感，不带科技感。";
+        holyLight.material = "白金光感 / 圣洁能量 / 柔亮边缘";
+        holyLight.effect = "指尖聚光、轻微粒子拖尾、强烈高光、瞬间把气氛从温暖拉回危险。";
+        holyLight.prompt = "holy white magic orb above fingertip, bright pure pressure, fantasy spellcasting, tense cinematic light, no sci-fi effect";
+
+        const divineOmen = createProp();
+        divineOmen.name = "万丈天光异象";
+        divineOmen.owner = "世界异象";
+        divineOmen.useCase = "认女与命运降临的视觉锚点";
+        divineOmen.appearance = "乌云裂开，垂直天光照在婴儿身上，百鸟环绕，远处群兽俯首。";
+        divineOmen.material = "金白暖光 / 云裂效果 / 羽毛与薄雾";
+        divineOmen.effect = "神圣宏大、从阴郁转向温暖、带命运感和开天辟地的气息。";
+        divineOmen.prompt = "divine sunbeam breaking clouds, holy warm light, birds circling, beasts bowing, epic fantasy omen";
+
+        template.props = [holyLight, divineOmen];
+
+        const storyboards = [
+          {
+            shotNumber: "01",
+            timing: "00:00-00:05",
+            shotSize: "特写",
+            visual: "疤脸男人近景特写，仰头大笑，黑发与红金长袍被狂风吹起，背景只保留模糊阴沉森林与乌云。",
+            action: "男人仰头狂笑，第一次带着压迫感冲进画面。",
+            dialogue: "旁白：哈哈大笑声震彻山林。妖娆刚一睁眼，就撞见一张比噩梦还可怕的脸。",
+            audio: "狂笑声 / 风声",
+            note: "首镜一定要有压迫感，但仍保持温馨动画电影质感。"
+          },
+          {
+            shotNumber: "02",
+            timing: "00:05-00:15",
+            shotSize: "远景",
+            visual: "阴暗浩瀚的森林海与群山延绵，乌云压顶，树林深处散布无数兽眼，地面潮湿带薄雾。",
+            action: "镜头从荒野环境慢慢压到兽眼和空旷路径，建立世界危险感。",
+            dialogue: "旁白：这里不是温暖卧室，而是万兽低吼的荒野。林海深处，成片兽眼在黑暗里幽幽发亮。",
+            audio: "低沉环境氛围 / 狼嚎 / 风声",
+            note: "世界观建立镜头，建议作为开场氛围主场景。"
+          },
+          {
+            shotNumber: "03",
+            timing: "00:15-00:25",
+            shotSize: "极特写",
+            visual: "苍绿色眼睛极近景，虹膜里隐约倒映婴儿身影，强调兴奋与危险。",
+            action: "镜头压到瞳孔和反光，制造命运锁定感。",
+            dialogue: "旁白：那双苍绿色的眼睛，像盯住猎物般兴奋。妖娆心里一炸：这男人，简直就是魔鬼。",
+            audio: "心跳感氛围 / 压迫低频",
+            note: "眼睛是角色识别锚点，也能做封面细节。"
+          },
+          {
+            shotNumber: "04",
+            timing: "00:25-00:35",
+            shotSize: "中远景",
+            visual: "男人将新生女婴高高举向天空，乌云裂开，万丈阳光倾泻，百鸟飞舞，群兽俯首。",
+            action: "从狂笑动作切到举婴动作，再用天光和鸟群把气氛拉到史诗奇迹。",
+            dialogue: "旁白：男人高举新生女婴，狂笑着宣告她是自己的女儿。下一瞬，乌云裂开，万丈阳光与百鸟齐鸣一同降临。",
+            audio: "恢弘弦乐 / 鸟鸣 / 光束升起音效",
+            note: "这是全片第一波最大视觉高潮。"
+          },
+          {
+            shotNumber: "05",
+            timing: "00:35-00:45",
+            shotSize: "中近景",
+            visual: "男人表情骤冷，抬起手指，指尖凝聚一团纯白神圣光球，背景仍是森林与残光。",
+            action: "气氛从神迹瞬间切成杀机，镜头聚焦灭魔之光。",
+            dialogue: "旁白：可变故突生，他的眼神骤然冰冷。指尖灭魔之光凝聚，死亡的气息瞬间逼近。",
+            audio: "紧张骤停 / 光球凝聚音效",
+            note: "靠强反差完成剧情翻转。"
+          },
+          {
+            shotNumber: "06",
+            timing: "00:45-00:55",
+            shotSize: "中景",
+            visual: "男人抱头发狂半跪在远处，婴儿在泥水与草地间努力往前爬，树木高耸、地面湿冷。",
+            action: "镜头拉开，让父亲和婴儿同时处在画面中，突出混乱与求生并置。",
+            dialogue: "旁白：男人忽然抱头发狂，拼命捶地。妖娆趁机扭着小身子，在泥水里拼命往远处爬去。",
+            audio: "急促呼吸 / 泥水摩擦 / 压迫底噪",
+            note: "这里要把婴儿的求生欲做得可爱又揪心。"
+          },
+          {
+            shotNumber: "07",
+            timing: "00:55-01:05",
+            shotSize: "中景",
+            visual: "夕阳余晖洒在森林边缘，父亲重新抱起像小泥猴一样的妖娆，把她按在胸口，神情温柔下来。",
+            action: "从发狂状态回落，父亲把婴儿抱回胸口，完成情绪收束。",
+            dialogue: "旁白：白光终于散去，他重新抱起像小泥猴一样的妖娆，笑着认回自己的女儿。荒野尽头，也终于有了一丝温柔。",
+            audio: "温暖收束 BGM / 轻风声",
+            note: "结尾要留温柔余韵，方便观众愿意追第二集。"
+          }
+        ];
+        template.storyboards = storyboards.map((data, index) => Object.assign(createStoryboard(index + 1), data));
+
+        template.prompts.character.name = "妖娆 / 疯癫父亲统一角色风格";
+        template.prompts.character.prompt = "温馨动画电影风格，东方玄幻童话气质，柔和笔触，高级插画质感，角色设计统一。男人保持黑长发、苍绿色眼睛、脸上蜈蚣状疤痕、红金长袍；婴儿保持圆脸大眼、粉色襁褓或泥泞婴儿状态；画面 cinematic composition，light bloom，细腻体积光，森林层次丰富。";
+        template.prompts.character.negative = "low quality, blurry, realistic horror, gore, blood, extra fingers, extra limbs, malformed hands, duplicate character, old man face, deformed baby, watermark, subtitles, text, logo, photorealistic skin, modern clothing, sci-fi magic effect";
+        template.prompts.scene.name = "阴森林海 / 奇迹天光空地";
+        template.prompts.scene.prompt = "Ancient Chinese fantasy forest sea, storm clouds, glowing beast eyes, soft anime style, cinematic scale, layered woodland atmosphere, divine sunbeam breaking clouds, birds circling, beasts bowing, warm fantasy animation illustration, high detail";
+        template.prompts.scene.negative = "horror, ugly, dark gore, low quality, blurry, messy composition, photorealistic horror, modern city, sci-fi glow";
+        template.prompts.shot.name = "镜头 4 神迹认女";
+        template.prompts.shot.prompt = "baby lifted to the sky, divine sunbeam breaking clouds, birds circling, beasts bowing, epic fantasy animation, holy warm light, cinematic composition, consistent character design, ancient Chinese fantasy aesthetic";
+        template.prompts.shot.negative = "low quality, text, watermark, realistic horror, gore, extra limbs";
+
+        template.voiceLines = [
+          { sequence: "01", role: "旁白", content: "阴森林海，乌云压顶。一场荒野中的父女初见，即将揭开序幕。", emotion: "压迫", duration: "3s", recorded: false },
+          { sequence: "02", role: "旁白", content: "哈哈大笑声震彻山林。妖娆刚一睁眼，就撞见一张比噩梦还可怕的脸。", emotion: "惊惧", duration: "5s", recorded: false },
+          { sequence: "03", role: "旁白", content: "这里不是温暖卧室，而是万兽低吼的荒野。林海深处，成片兽眼在黑暗里幽幽发亮。", emotion: "压迫", duration: "10s", recorded: false },
+          { sequence: "04", role: "旁白", content: "那双苍绿色的眼睛，像盯住猎物般兴奋。妖娆心里一炸：这男人，简直就是魔鬼。", emotion: "紧张", duration: "10s", recorded: false },
+          { sequence: "05", role: "旁白", content: "男人高举新生女婴，狂笑着宣告她是自己的女儿。下一瞬，乌云裂开，万丈阳光与百鸟齐鸣一同降临。", emotion: "震撼", duration: "10s", recorded: false },
+          { sequence: "06", role: "旁白", content: "可变故突生，他的眼神骤然冰冷。指尖灭魔之光凝聚，死亡的气息瞬间逼近。", emotion: "高压", duration: "10s", recorded: false },
+          { sequence: "07", role: "旁白", content: "男人忽然抱头发狂，拼命捶地。妖娆趁机扭着小身子，在泥水里拼命往远处爬去。", emotion: "慌乱", duration: "10s", recorded: false },
+          { sequence: "08", role: "旁白", content: "白光终于散去，他重新抱起像小泥猴一样的妖娆，笑着认回自己的女儿。荒野尽头，也终于有了一丝温柔。", emotion: "治愈", duration: "10s", recorded: false }
+        ].map((item, index) => Object.assign(createVoiceLine(index + 1), item));
+
+        template.audio.backgroundMusic = [
+          { scene: "片头与荒野铺陈", musicType: "阴郁玄幻氛围", purpose: "建立荒野压迫感", ready: false, notes: "以低频氛围和风声托底" },
+          { scene: "天光认女高潮", musicType: "神圣史诗", purpose: "托起神迹与命运感", ready: false, notes: "鸟鸣和光束音效一起进入" },
+          { scene: "结尾抱回", musicType: "温暖治愈", purpose: "完成情绪回落", ready: false, notes: "用金橙收束，不要太煽情" }
+        ].map((item) => Object.assign(createBgmRow(), item));
+
+        markChecklistDone(template.audio.effects, ["风声", "狼嚎"]);
+        markChecklistDone(template.demoChecklist, ["1段剧情梗概", "分镜脚本", "台词/旁白"]);
+
+        template.meta.sampleKey = "zhuque-episode-1";
+        return template;
+      }
+
       function createDefaultState(mode) {
         const template = {
           projectInfo: createProjectInfo(),
@@ -1000,21 +1237,27 @@
           template.folders = [createFolder()];
           template.meta.initializedFromTemplate = false;
         } else {
-          template.projectInfo.targetPlatforms = "抖音 / B站 / 小红书 / 视频号 / 其他";
-          template.projectInfo.style = "古风温馨 / 华丽仙侠 / 热血玄幻 / 治愈动画 / 其他";
-          template.episodes[0].logline = "本集一句话梗概写在这里，例如：女主重生于兽潮荒野，在异象与父爱中开启命运。";
-          template.episodes[0].highlights = "看点1：\n看点2：\n看点3：";
-          template.voiceLines[0].role = "旁白";
-          template.voiceLines[0].content = "这里填写旁白或台词内容。";
-          template.voiceLines[0].emotion = "紧张";
-          template.voiceLines[0].duration = "4s";
-          template.voiceLines[1].role = "角色";
-          template.voiceLines[1].content = "这里填写角色对话。";
-          template.voiceLines[1].emotion = "激动";
-          template.voiceLines[1].duration = "2s";
+          buildZhuqueEpisodeOneTemplate(template);
         }
 
         return template;
+      }
+
+      function shouldUpgradeEmptyState(candidate) {
+        if (!candidate || typeof candidate !== "object") {
+          return false;
+        }
+        const project = candidate.projectInfo || {};
+        const episode = Array.isArray(candidate.episodes) && candidate.episodes[0] ? candidate.episodes[0] : {};
+        const character = Array.isArray(candidate.characters) && candidate.characters[0] ? candidate.characters[0] : {};
+        const storyboard = Array.isArray(candidate.storyboards) && candidate.storyboards[0] ? candidate.storyboards[0] : {};
+        return !project.projectName &&
+          !project.novelName &&
+          !project.chapterRange &&
+          !episode.chapterName &&
+          !episode.logline &&
+          !character.name &&
+          !storyboard.visual;
       }
 
       function normalizeChecklistArray(list, fallback) {
@@ -1115,9 +1358,18 @@
             saveMessage = "已载入默认模板";
             return createDefaultState("template");
           }
+          const parsed = JSON.parse(raw);
+          if (shouldUpgradeEmptyState(parsed)) {
+            const seeded = createDefaultState("template");
+            seeded.meta.lastSavedAt = new Date().toISOString();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(seeded));
+            saveStateLabel = "saved";
+            saveMessage = "已升级为空白页的《朱雀异世》第一集示例";
+            return seeded;
+          }
           saveStateLabel = "saved";
           saveMessage = "已载入本地数据";
-          return normalizeState(JSON.parse(raw));
+          return normalizeState(parsed);
         } catch (error) {
           console.warn("加载本地数据失败", error);
           saveStateLabel = "error";
