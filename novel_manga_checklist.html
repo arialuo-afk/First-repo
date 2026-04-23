@@ -636,6 +636,7 @@
       const STORAGE_KEY = "novel-manga-checklist-state-v1";
       const APP_VERSION = 1;
       const APP_TITLE = "小说改编 AI 漫剧制作清单";
+      const SAMPLE_HASH = "#zhuque-episode-1";
       const app = document.getElementById("app");
       const importInput = document.getElementById("import-input");
 
@@ -667,11 +668,11 @@
         "folders": () => createFolder()
       };
 
-      let activeTab = "projectInfo";
-      let state = loadInitialState();
-      let saveTimer = null;
       let saveStateLabel = "saved";
       let saveMessage = "已载入本地数据";
+      let activeTab = "projectInfo";
+      let saveTimer = null;
+      let state = loadInitialState();
 
       function uid(prefix) {
         return prefix + "-" + Math.random().toString(36).slice(2, 10) + "-" + Date.now().toString(36);
@@ -1260,6 +1261,19 @@
           !storyboard.visual;
       }
 
+      function shouldForceSampleFromHash() {
+        return String(window.location.hash || "").toLowerCase() === SAMPLE_HASH;
+      }
+
+      function loadZhuqueSampleState(sourceLabel) {
+        const seeded = createDefaultState("template");
+        seeded.meta.lastSavedAt = new Date().toISOString();
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(seeded));
+        saveStateLabel = "saved";
+        saveMessage = sourceLabel || "已载入《朱雀异世》第一集示例";
+        return seeded;
+      }
+
       function normalizeChecklistArray(list, fallback) {
         if (!Array.isArray(list) || list.length === 0) {
           return deepClone(fallback);
@@ -1352,6 +1366,9 @@
 
       function loadInitialState() {
         try {
+          if (shouldForceSampleFromHash()) {
+            return loadZhuqueSampleState("已按链接载入《朱雀异世》第一集示例");
+          }
           const raw = localStorage.getItem(STORAGE_KEY);
           if (!raw) {
             saveStateLabel = "saved";
@@ -1360,12 +1377,7 @@
           }
           const parsed = JSON.parse(raw);
           if (shouldUpgradeEmptyState(parsed)) {
-            const seeded = createDefaultState("template");
-            seeded.meta.lastSavedAt = new Date().toISOString();
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(seeded));
-            saveStateLabel = "saved";
-            saveMessage = "已升级为空白页的《朱雀异世》第一集示例";
-            return seeded;
+            return loadZhuqueSampleState("已升级为空白页的《朱雀异世》第一集示例");
           }
           saveStateLabel = "saved";
           saveMessage = "已载入本地数据";
@@ -1866,7 +1878,7 @@
 
       function renderApp() {
         document.title = APP_TITLE;
-        app.innerHTML = '<div class="page"><header class="hero"><div class="hero-top"><div class="hero-copy"><h1>' + APP_TITLE + '</h1><p>一个单文件、可离线使用的漫剧制作工作台。你可以在这里持续补充章节改编、角色设定、场景与分镜内容，也可以上传本地图片做素材预览，并把整个项目导出成 JSON 继续接力。</p></div><div class="toolbar"><button class="btn" data-action="new-blank">新建空白项目</button><button class="btn" data-action="reset-template">恢复默认模板</button><button class="btn" data-action="export-json">导出 JSON</button><button class="btn" data-action="import-json">导入 JSON</button><button class="btn primary" data-action="print-page">打印 / 导出 PDF</button><div id="save-status" class="status-pill" data-state="' + escapeHtml(saveStateLabel) + '"><span class="status-dot"></span><span class="status-text">' + escapeHtml(saveMessage) + '</span></div></div></div>' + renderOverview() + renderTabs() + '</header><main class="panel">' + renderActiveTab() + '</main><div class="footer-note">提示：图片会以浏览器本地数据形式保存。若上传很多大图，建议定期导出 JSON 备份。</div></div>';
+        app.innerHTML = '<div class="page"><header class="hero"><div class="hero-top"><div class="hero-copy"><h1>' + APP_TITLE + '</h1><p>一个单文件、可离线使用的漫剧制作工作台。你可以在这里持续补充章节改编、角色设定、场景与分镜内容，也可以上传本地图片做素材预览，并把整个项目导出成 JSON 继续接力。</p></div><div class="toolbar"><button class="btn" data-action="load-zhuque-sample">载入第一集示例</button><button class="btn" data-action="new-blank">新建空白项目</button><button class="btn" data-action="reset-template">恢复默认模板</button><button class="btn" data-action="export-json">导出 JSON</button><button class="btn" data-action="import-json">导入 JSON</button><button class="btn primary" data-action="print-page">打印 / 导出 PDF</button><div id="save-status" class="status-pill" data-state="' + escapeHtml(saveStateLabel) + '"><span class="status-dot"></span><span class="status-text">' + escapeHtml(saveMessage) + '</span></div></div></div>' + renderOverview() + renderTabs() + '</header><main class="panel">' + renderActiveTab() + '</main><div class="footer-note">提示：图片会以浏览器本地数据形式保存。若上传很多大图，建议定期导出 JSON 备份。</div></div>';
         autoResizeTextareas();
       }
 
@@ -2016,6 +2028,14 @@
         renderApp();
       }
 
+      function loadZhuqueSampleByAction() {
+        if (!window.confirm("确定载入《朱雀异世》第一集示例吗？当前内容会被覆盖。")) {
+          return;
+        }
+        state = loadZhuqueSampleState("已手动载入《朱雀异世》第一集示例");
+        renderApp();
+      }
+
       document.addEventListener("click", function (event) {
         const target = event.target.closest("[data-action]");
         if (!target) {
@@ -2065,6 +2085,10 @@
         }
         if (action === "reset-template") {
           resetProject("template");
+          return;
+        }
+        if (action === "load-zhuque-sample") {
+          loadZhuqueSampleByAction();
         }
       });
 
